@@ -58,6 +58,21 @@ def t_ID(t):
         t.type = 'ID'
     return t
 
+def t_CONSTANTE(t):
+    # primer caracter es mayuscula y el resto pueden ser letras, dígitos o guiones bajos
+    r'[A-Z]\w*'
+    if t.value not in palabras_reservadas:
+        t.type = 'CONSTANTE'
+    else:
+        t.type = palabras_reservadas[t.value]
+    return t
+
+def t_VAR_CLASE(t):
+    # primer caracter @@ y luego letra y demas letras, digitos o guiones bajos.
+    r'@@[_a-zA-Z]\w*'
+    t.type = 'VAR_CLASE'
+    return t
+
 # JUAN
 # Responsabilidades: literales numéricos, cadenas y operadores aritméticos.
 
@@ -130,7 +145,7 @@ def t_error(t):
 
 # fin
 
-tokens = tuple(list(tokens_nahin) + list(palabras_reservadas.values()) + ['ID', 'NUMERO_TEMPORAL', 'CADENA_TEMPORAL'])
+tokens = tuple(list(tokens_nahin) + list(palabras_reservadas.values()) + ['ID', 'CONSTANTE', 'VAR_CLASE', 'NUMERO_TEMPORAL', 'CADENA_TEMPORAL'])
 
 lexer = lex.lex()
 
