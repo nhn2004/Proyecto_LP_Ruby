@@ -97,16 +97,30 @@ def t_COMENTARIO_MULTILINEA(t):
     t.lexer.lineno += t.value.count('\n')
 
 # JUAN
-# Responsabilidades: literales numéricos, cadenas y operadores aritméticos.
+# Responsabilidades: literales numericos, cadenas, simbolos y operadores aritmeticos y de asignacion
 
-def t_NUMERO_TEMPORAL(t):
-    r'\d+(\.\d+)?'
-    t.type = 'NUMERO_TEMPORAL'
+tokens_juan = ('FLOTANTE', 'ENTERO', 'CADENA', 'SIMBOLO')
+
+def t_FLOTANTE(t):
+    # numeros con punto decimal y exponente opcional ej 3.14 o 1.2e3
+    # va antes de ENTERO para que no lo corte en el punto
+    r'\d[\d_]*\.\d[\d_]*([eE][+-]?\d+)?'
     return t
 
-def t_CADENA_TEMPORAL(t):
-    r'(".*?")|(\'.*?\')'
-    t.type = 'CADENA_TEMPORAL'
+def t_ENTERO(t):
+    # hexadecimal (0x1F), binario (0b1010) o decimal que puede tener _ (1_000_000)
+    r'0[xX][0-9a-fA-F]+|0[bB][01]+|\d[\d_]*'
+    return t
+
+def t_CADENA(t):
+    # cadena con comillas dobles o simples, se aceptan escapes como \" adentro
+    r'"(\\.|[^"\\])*"|\'(\\.|[^\'\\])*\''
+    t.lexer.lineno += t.value.count('\n')
+    return t
+
+def t_SIMBOLO(t):
+    # dos puntos seguido del nombre ej :nombre, no choca con :: porque despues del : tiene que venir letra
+    r':[a-zA-Z_]\w*[?!]?'
     return t
 
 
@@ -168,7 +182,7 @@ def t_error(t):
 
 # fin
 
-tokens = tuple(list(tokens_nahin) + list(palabras_reservadas.values()) + list(tokens_isabella) + ['NUMERO_TEMPORAL', 'CADENA_TEMPORAL'])
+tokens = tuple(list(tokens_nahin) + list(palabras_reservadas.values()) + list(tokens_isabella) + list(tokens_juan))
 
 lexer = lex.lex()
 
