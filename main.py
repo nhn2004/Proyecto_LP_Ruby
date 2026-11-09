@@ -4,6 +4,7 @@ import lexer  # Importamos tu motor de reglas
 
 def probar_lexer_consola():
     print("=== PRUEBA DE ANALIZADOR LÉXICO (MODO CONSOLA) ===")
+    usuario = input("Ingresa tu usuario de GitHub: ").strip()
     ruta = input("Ingresa la ruta del archivo a analizar (ej. algoritmos/prueba1.rb): ").strip()
     
     if not os.path.exists(ruta):
@@ -18,7 +19,6 @@ def probar_lexer_consola():
     tokens_encontrados, errores_encontrados = lexer.tokenizar(codigo)
 
     # Preparar el texto del Log
-    usuario = "nhn2004"
     fecha_hora = datetime.now().strftime("%d-%m-%Y-%Hh%M")
     nombre_log = f"lexico-{usuario}-{fecha_hora}.txt"
     
