@@ -1,13 +1,50 @@
 import ply.lex as lex
 
-
-# ISABELLA
-# Responsabilidades: variables, palabras reservadas y comentarios.
-
-def t_ID_TEMPORAL(t):
-    r'[a-zA-Z_][a-zA-Z0-9_]*'
-    t.type = 'ID_TEMPORAL'
-    return t
+# Contribución Isabella
+# Responsabilidades: variables, palabras reservadas y comentarios
+palabras_reservadas = {
+    'if': 'IF',
+    'elsif': 'ELSIF',
+    'else': 'ELSE',
+    'unless': 'UNLESS',
+    'then': 'THEN',
+    'case': 'CASE',
+    'when': 'WHEN',
+    'in': 'IN',
+    'while': 'WHILE',
+    'until': 'UNTIL',
+    'for': 'FOR',
+    'do': 'DO',
+    'break': 'BREAK',
+    'next': 'NEXT',
+    'redo': 'REDO',
+    'retry': 'RETRY',
+    'def': 'DEF',
+    'return': 'RETURN',
+    'yield': 'YIELD',
+    'class': 'CLASS',
+    'module': 'MODULE',
+    'self': 'SELF',
+    'super': 'SUPER',
+    'begin': 'BEGIN',
+    'rescue': 'RESCUE',
+    'ensure': 'ENSURE',
+    'end': 'END',
+    'and': 'AND',
+    'or': 'OR',
+    'not': 'NOT',
+    'true': 'TRUE',
+    'false': 'FALSE',
+    'nil': 'NIL',
+    'alias': 'ALIAS',
+    'undef': 'UNDEF',
+    'defined?': 'DEFINED',
+    'BEGIN': 'BEGIN_BLOCK',
+    'END': 'END_BLOCK',
+    '__FILE__': 'FILE',
+    '__LINE__': 'LINE',
+    '__ENCODING__': 'ENCODING'
+}
 
 
 # JUAN
