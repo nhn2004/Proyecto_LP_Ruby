@@ -99,7 +99,12 @@ def t_COMENTARIO_MULTILINEA(t):
 # JUAN
 # Responsabilidades: literales numericos, cadenas, simbolos y operadores aritmeticos y de asignacion
 
-tokens_juan = ('FLOTANTE', 'ENTERO', 'CADENA', 'SIMBOLO')
+tokens_juan = (
+    'FLOTANTE', 'ENTERO', 'CADENA', 'SIMBOLO',
+    'SUMA', 'RESTA', 'MULTIPLICACION', 'DIVISION', 'MODULO', 'POTENCIA',
+    'IGUAL', 'MAS_IGUAL', 'MENOS_IGUAL', 'POR_IGUAL', 'DIVIDIDO_IGUAL',
+    'MODULO_IGUAL', 'POTENCIA_IGUAL', 'OR_IGUAL', 'AND_IGUAL'
+)
 
 def t_FLOTANTE(t):
     # numeros con punto decimal y exponente opcional ej 3.14 o 1.2e3
@@ -122,6 +127,26 @@ def t_SIMBOLO(t):
     # dos puntos seguido del nombre ej :nombre, no choca con :: porque despues del : tiene que venir letra
     r':[a-zA-Z_]\w*[?!]?'
     return t
+
+# operadores aritmeticos
+t_POTENCIA = r'\*\*'
+t_SUMA = r'\+'
+t_RESTA = r'-'
+t_MULTIPLICACION = r'\*'
+t_DIVISION = r'/'
+t_MODULO = r'%'
+
+# operadores de asignacion
+# ply ordena estos por largo de la expresion asi que **= va antes que ** y ||= antes que ||
+t_POTENCIA_IGUAL = r'\*\*='
+t_MAS_IGUAL = r'\+='
+t_MENOS_IGUAL = r'-='
+t_POR_IGUAL = r'\*='
+t_DIVIDIDO_IGUAL = r'/='
+t_MODULO_IGUAL = r'%='
+t_OR_IGUAL = r'\|\|='
+t_AND_IGUAL = r'&&='
+t_IGUAL = r'='
 
 
 # Nahin Cevallos
