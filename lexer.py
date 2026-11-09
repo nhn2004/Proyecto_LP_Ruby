@@ -163,24 +163,51 @@ tokens_nahin = (
     'COMA', 'PUNTO_COMA', 'PUNTO', 'DOS_PUNTOS'
 )
 
-t_IGUAL_CASO = r'==='
-t_IGUAL_IGUAL = r'=='
+# Aqui queremos definir los tokens que tienen más de un caracter y que pueden ser confundidos con otros tokens más cortos. Para que '===' sea reconocido antes que '==' y '==' en ese orden especifico como definimos las funciones.
+def t_IGUAL_CASO(t):
+    r'==='
+    return t
+
+def t_IGUAL_IGUAL(t):
+    r'=='
+    return t
+
+def t_NAVE(t):
+    r'<=>'
+    return t
+
+def t_MENOR_IGUAL(t):
+    r'<='
+    return t
+
+def t_MAYOR_IGUAL(t):
+    r'>='
+    return t
+
+# Lo mismo con los rangos.
+def t_RANGO_EXCLUSIVO(t):
+    r'\.\.\.'
+    return t
+
+def t_RANGO_INCLUSIVO(t):
+    r'\.\.'
+    return t
+
+def t_LAMBDA_FLECHA(t):
+    r'->'
+    return t
+
+def t_DOBLE_DOS_PUNTOS(t):
+    r'::'
+    return t
+
 t_DISTINTO = r'!='
-t_NAVE = r'<=>'
-t_MENOR_IGUAL = r'<='
-t_MAYOR_IGUAL = r'>='
 t_MENOR = r'<'
 t_MAYOR = r'>'
-
 t_AND_LOGICO = r'&&'
 t_OR_LOGICO = r'\|\|'
 t_NOT_LOGICO = r'!'
-
-t_RANGO_EXCLUSIVO = r'\.\.\.'
-t_RANGO_INCLUSIVO = r'\.\.'
-t_DOBLE_DOS_PUNTOS = r'::'
 t_FLECHA_HASH = r'=>'
-t_LAMBDA_FLECHA = r'->'
 
 t_PAREN_IZQ = r'\('
 t_PAREN_DER = r'\)'
@@ -193,6 +220,7 @@ t_PUNTO_COMA = r';'
 t_PUNTO = r'\.'
 t_DOS_PUNTOS = r':'
 
+# Para el manejo de errores, contar el salto de linea  ver en que linea estamos y agregarlo a la lista de errores lexicos.
 def t_NUEVA_LINEA(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
@@ -201,7 +229,12 @@ t_ignore = ' \t\r'
 errores_lexicos = []
 
 def t_error(t):
-    msj = f"Error léxico [línea {t.lexer.lineno}]: carácter no reconocido '{t.value[0]}'"
+    caracter = t.value[0]
+    if caracter.isspace():
+        t.lexer.skip(1)
+        return
+        
+    msj = f"Error léxico [línea {t.lexer.lineno}]: carácter no reconocido '{caracter}'"
     errores_lexicos.append(msj)
     t.lexer.skip(1)
 
