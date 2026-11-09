@@ -49,8 +49,10 @@ palabras_reservadas = {
     'gets': 'GETS'
 }
 
+tokens_isabella = ('ID', 'CONSTANTE', 'VAR_CLASE', 'VAR_INSTANCIA', 'VAR_GLOBAL')
+
 def t_ID(t):
-    #primer caracter debe ser letra minuscula o guion bajo y después cualquier combinación de letras, dígitos o guiones bajos
+    #primer caracter debe ser letra minuscula o guion bajo y después cualquier combinación de letras, dígitos o guiones bajos y opcional al final ? o !
     r'[a-z_]\w*[?!]?'
     if t.value in palabras_reservadas:
         t.type = palabras_reservadas[t.value]
@@ -68,11 +70,22 @@ def t_CONSTANTE(t):
     return t
 
 def t_VAR_CLASE(t):
-    # primer caracter @@ y luego letra y demas letras, digitos o guiones bajos.
+    # primer caracter @@ y luego letra o guion bajo y demas letras, digitos o guiones bajos.
     r'@@[_a-zA-Z]\w*'
     t.type = 'VAR_CLASE'
     return t
 
+def t_VAR_INSTANCIA(t):
+    #un @ y luego letra o guion bajo y despues demas letras, digitos o guiones bajos
+    r'@[_a-zA-Z]\w*'
+    t.type = 'VAR_INSTANCIA'
+    return t
+
+def t_VAR_GLOBAL(t):
+    # primero $ y luego letra o guion bajo y despues letras, digitos o guiones bajos
+    r'\$[_a-zA-Z]\w*'
+    t.type = 'VAR_GLOBAL'
+    return t
 # JUAN
 # Responsabilidades: literales numéricos, cadenas y operadores aritméticos.
 
@@ -145,7 +158,7 @@ def t_error(t):
 
 # fin
 
-tokens = tuple(list(tokens_nahin) + list(palabras_reservadas.values()) + ['ID', 'CONSTANTE', 'VAR_CLASE', 'NUMERO_TEMPORAL', 'CADENA_TEMPORAL'])
+tokens = tuple(list(tokens_nahin) + list(palabras_reservadas.values()) + list(tokens_isabella) + ['NUMERO_TEMPORAL', 'CADENA_TEMPORAL'])
 
 lexer = lex.lex()
 
