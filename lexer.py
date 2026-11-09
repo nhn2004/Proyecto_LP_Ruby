@@ -43,9 +43,20 @@ palabras_reservadas = {
     'END': 'END_BLOCK',
     '__FILE__': 'FILE',
     '__LINE__': 'LINE',
-    '__ENCODING__': 'ENCODING'
+    '__ENCODING__': 'ENCODING',
+    'puts': 'PUTS',   
+    'print': 'PRINT',
+    'gets': 'GETS'
 }
 
+def t_ID(t):
+    #primer caracter debe ser letra minuscula o guion bajo y después cualquier combinación de letras, dígitos o guiones bajos
+    r'[a-z_]\w*[?!]?'
+    if t.value in palabras_reservadas:
+        t.type = palabras_reservadas[t.value]
+    else:
+        t.type = 'ID'
+    return t
 
 # JUAN
 # Responsabilidades: literales numéricos, cadenas y operadores aritméticos.
@@ -119,7 +130,7 @@ def t_error(t):
 
 # fin
 
-tokens = tuple(list(tokens_nahin) + ['ID_TEMPORAL', 'NUMERO_TEMPORAL', 'CADENA_TEMPORAL'])
+tokens = tuple(list(tokens_nahin) + list(palabras_reservadas.values()) + ['ID', 'NUMERO_TEMPORAL', 'CADENA_TEMPORAL'])
 
 lexer = lex.lex()
 
