@@ -86,6 +86,16 @@ def t_VAR_GLOBAL(t):
     r'\$[_a-zA-Z]\w*'
     t.type = 'VAR_GLOBAL'
     return t
+
+def t_COMENTARIO(t):
+    # un comentario inicia con # y puede ir cualquier caracter excepto un salto de línea
+    r'\#[^\n]*'
+
+def t_COMENTARIO_MULTILINEA(t):
+    # inicia con =begin y termina con =end y puede ir cualquier caracter entre ellos y lo hice para que sea lo menos codicioso posible para que tome el primer =end que encuentre (con *?)   
+    r'=begin(.|\n)*?=end'
+    t.lexer.lineno += t.value.count('\n')
+
 # JUAN
 # Responsabilidades: literales numéricos, cadenas y operadores aritméticos.
 
