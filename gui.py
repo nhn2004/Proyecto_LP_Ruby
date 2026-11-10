@@ -206,7 +206,20 @@ class AnalizadorGUI(tk.Tk):
         self.estado.set("")
 
     def analizar(self):
-        pass  # Nahin (commit 6)
+        if not self.archivo_actual:
+            messagebox.showinfo("Aviso", "Primero abre un archivo .rb.")
+            return
+
+        codigo = self.editor.get("1.0", "end-1c")
+        tokens, errores = analizar_codigo(codigo)
+        self._llenar_resultados(tokens, errores)
+
+        archivo = os.path.relpath(self.archivo_actual, CARPETA)
+        nombre, texto = armar_log(self.usuario.get(), archivo, tokens, errores)
+        guardar_log(nombre, texto)
+
+        self._mostrar_log(texto)
+        self.estado.set(f"Log guardado: logs/interfaz/{nombre}")
 
     def _mostrar_log(self, texto):
         self.texto_log.config(state="normal")
