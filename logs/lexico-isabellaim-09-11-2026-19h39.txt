@@ -1,0 +1,68 @@
+Archivo de log: lexico-isabellaim-09-11-2026-19h39.txt
+Estudiante: isabellaim
+Fecha de ejecución: 09-11-2026 19:39
+Archivo analizado: algoritmos/prueba3_isabella.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[4] CONSTANTE: MAX_PRESTAMOS
+[4] IGUAL: =
+[4] ENTERO: 3
+[5] VAR_GLOBAL: $multa_diaria
+[5] IGUAL: =
+[5] FLOTANTE: 0.25
+[7] CLASS: class
+[7] CONSTANTE: Biblioteca
+[8] VAR_CLASE: @@total_libros
+[8] IGUAL: =
+[8] ENTERO: 0
+[10] DEF: def
+[10] ID: initialize
+[10] PAREN_IZQ: (
+[10] ID: nombre
+[10] PAREN_DER: )
+[11] VAR_INSTANCIA: @nombre
+[11] IGUAL: =
+[11] ID: nombre
+[12] IGUAL: =
+[12] ENTERO: 0
+[13] END: end
+[15] DEF: def
+[15] ID: prestar
+[15] PAREN_IZQ: (
+[15] ID: dias
+[15] PAREN_DER: )
+[16] IGUAL: =
+[16] ID: dias
+[16] MULTIPLICACION: *
+[16] VAR_GLOBAL: $multa_diaria
+[17] RETURN: return
+[17] TRUE: true
+[17] IF: if
+[17] VAR_INSTANCIA: @prestados
+[17] MENOR: <
+[17] CONSTANTE: MAX_PRESTAMOS
+[18] RETURN: return
+[18] FALSE: false
+[19] END: end
+[20] END: end
+[22] ID: biblio
+[22] IGUAL: =
+[22] CONSTANTE: Biblioteca
+[22] PUNTO: .
+[22] ID: new
+[22] PAREN_IZQ: (
+[22] CADENA: "Central"
+[22] PAREN_DER: )
+[23] PUTS: puts
+[23] ID: biblio
+[23] PUNTO: .
+[23] ID: prestar
+[23] PAREN_IZQ: (
+[23] ENTERO: 5
+[23] PAREN_DER: )
+[23] CADENA: "sin cupo"
+
+*********** ERRORES ***********
+Error léxico [línea 12]: nombre de variable inválido '@1prestados', no puede empezar con un número
+Error léxico [línea 16]: nombre de variable inválido '$9multa', no puede empezar con un número
+Error léxico [línea 23]: carácter no reconocido '¬'
