@@ -144,6 +144,9 @@ class AnalizadorGUI(tk.Tk):
         self.editor = tk.Text(marco, wrap="none", bd=0, highlightthickness=0, padx=8, state="disabled", font=FUENTE_CODIGO, fg=TEXTO, yscrollcommand=lambda *a: self._sync(scroll, *a))
         self.editor.pack(side="left", fill="both", expand=True)
         self.editor.tag_configure("linea_error", background="#fff3b0")
+        # error seleccionado en la pestaña Errores
+        self.editor.tag_configure("error_elegido", background=ROJO_FONDO)
+        self.numeros.tag_configure("error_elegido", foreground=ROJO, font=(FUENTE_CODIGO[0], FUENTE_CODIGO[1], "bold"))
         self.editor.bind("<<Modified>>", self._al_modificar)
 
         # lo que se muestra cuando no hay archivo
@@ -161,6 +164,7 @@ class AnalizadorGUI(tk.Tk):
         self.pestanas.add(self.tabla_tokens, text="Tokens")
         self.pestanas.add(self.tabla_errores, text="Errores")
         self.pestanas.add(self.texto_log, text="Log")
+        self.tabla_errores.bind("<<TreeviewSelect>>", self._ir_a_error)
 
     def _tabla(self, columnas):
         nombres = [c[0] for c in columnas]
@@ -269,7 +273,20 @@ class AnalizadorGUI(tk.Tk):
                 self.editor.tag_add("linea_error", f"{linea}.0", f"{linea}.end")
 
     def _ir_a_error(self, evento=None):
-        pass  # Juan (commit 9)
+        seleccion = self.tabla_errores.selection()
+        if not seleccion:
+            return
+        linea = self.tabla_errores.item(seleccion[0], "values")[0]
+        self.editor.tag_remove("error_elegido", "1.0", "end")
+        self.numeros.tag_remove("error_elegido", "1.0", "end")
+        if linea:
+            self.editor.tag_add("error_elegido", f"{linea}.0", f"{linea}.end")
+            self.editor.tag_raise("error_elegido")  # rojo encima del amarillo
+            self.numeros.tag_add("error_elegido", f"{linea}.0", f"{linea}.end")
+            self.numeros.see(f"{linea}.0")
+            self.editor.see(f"{linea}.0")
+            self.editor.mark_set("insert", f"{linea}.0")
+            self.editor.focus_set()
 
 
 if __name__ == "__main__":
