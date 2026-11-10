@@ -1,36 +1,36 @@
 # Algoritmo de prueba 2 de Isabella
-# Inventario de una tienda
+# Estacion del clima
 =begin
-Revisa el stock de algunos productos
-y avisa cuando hay que reponer
+Revisa la temperatura de algunas ciudades
+y dice si hace frio, templado o calor
 =end
 
-module Tienda
-  STOCK_MINIMO = 5
-  $tienda_abierta = true
-  def self.revisar(nombre, cantidad)
-    case cantidad
-    when 0 then puts "#{nombre} agotado"
-    when 1..STOCK_MINIMO then puts "#{nombre} por reponer"
-    else puts "#{nombre} disponible"
+module Clima
+  TEMP_CALOR = 28
+  $estacion_activa = true
+  def self.clasificar(ciudad, grados)
+    case grados
+    when -10..12 then puts "#{ciudad}: frio"
+    when 13..TEMP_CALOR then puts "#{ciudad}: templado"
+    else puts "#{ciudad}: calor"
     end
   end
-  
+
   def self.avisar
     yield if block_given?
   end
 end
 
-productos = [["pan", 0], ["leche", 3], ["queso", 12]]
+lecturas = [["Quito", 11], ["Cuenca", 16], ["Guayaquil", 31]]
 
 begin
-  for producto in productos do
-    break unless $tienda_abierta
-    Tienda.revisar(producto[0], producto[1])
+  for lectura in lecturas do
+    break unless $estacion_activa
+    Clima.clasificar(lectura[0], lectura[1])
   end
-  Tienda.avisar { puts "Inventario revisado" }
+  Clima.avisar { puts "Lecturas completas" }
 rescue
-  puts "Error al revisar el inventario"
+  puts "Error al leer los sensores"
 ensure
-  puts "Revision terminada"
+  puts "Estacion apagada"
 end
