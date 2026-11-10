@@ -100,6 +100,7 @@ def t_COMENTARIO_MULTILINEA(t):
     # inicia con =begin y termina con =end y puede ir cualquier caracter entre ellos y lo hice para que sea lo menos codicioso posible para que tome el primer =end que encuentre (con *?)   
     r'=begin(.|\n)*?=end'
     t.lexer.lineno += t.value.count('\n')
+# fin Isabella
 
 # JUAN
 # Responsabilidades: literales numericos, cadenas, simbolos y operadores aritmeticos y de asignacion
