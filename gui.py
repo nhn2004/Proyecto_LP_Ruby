@@ -45,9 +45,9 @@ def armar_log(usuario, archivo, tokens, errores):
     return nombre, texto
 
 
-def guardar_log(nombre, texto):
-    # los logs de la interfaz van en su propia subcarpeta
-    carpeta_logs = os.path.join(CARPETA, "logs", "interfaz")
+def guardar_log(usuario, nombre, texto):
+    # La ruta crea la subcarpeta con el nombre del usuario de forma dinámica
+    carpeta_logs = os.path.join(CARPETA, "logs", usuario)
     os.makedirs(carpeta_logs, exist_ok=True)
     ruta = os.path.join(carpeta_logs, nombre)
     with open(ruta, "w", encoding="utf-8") as f:
@@ -229,6 +229,8 @@ class AnalizadorGUI(tk.Tk):
         self._mostrar_log("")
         self.estado.set("")
 
+
+
     def analizar(self):
         if not self.archivo_actual:
             messagebox.showinfo("Aviso", "Primero abre un archivo .rb.")
@@ -239,11 +241,12 @@ class AnalizadorGUI(tk.Tk):
         self._llenar_resultados(tokens, errores)
 
         archivo = os.path.relpath(self.archivo_actual, CARPETA)
-        nombre, texto = armar_log(self.usuario.get(), archivo, tokens, errores)
-        guardar_log(nombre, texto)
+        usuario_actual = self.usuario.get()
+        nombre, texto = armar_log(usuario_actual, archivo, tokens, errores)
+        guardar_log(usuario_actual, nombre, texto)
 
         self._mostrar_log(texto)
-        self.estado.set(f"Log guardado: logs/interfaz/{nombre}")
+        self.estado.set(f"Log guardado: logs/{usuario_actual}/{nombre}")
 
     def _mostrar_log(self, texto):
         self.texto_log.config(state="normal")
