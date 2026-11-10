@@ -79,7 +79,31 @@ class AnalizadorGUI(tk.Tk):
         self._barra_estado()
 
     def _estilos(self):
-        pass  # Nahin (commit 8)
+        # mismo estilo para botones y caja de usuario
+        estilo = ttk.Style(self)
+        estilo.theme_use("clam")
+        forma = dict(background="white", fieldbackground="white", bordercolor=BORDE, lightcolor="white", darkcolor="white", focuscolor="white", relief="solid", borderwidth=1, padding=(10, 4), foreground=TEXTO)
+        estilo.configure("TButton", width=0, **forma)
+        estilo.map("TButton", background=[("active", FONDO_NUMEROS)], bordercolor=[("focus", BORDE)])
+
+        # Analizar en oscuro porque es el botón principal
+        estilo.configure("Principal.TButton", background=OSCURO, foreground="white", bordercolor=OSCURO, lightcolor=OSCURO, darkcolor=OSCURO, focuscolor=OSCURO)
+        estilo.map("Principal.TButton", background=[("active", "black")], bordercolor=[("focus", OSCURO)])
+
+        estilo.configure("TCombobox", arrowcolor=TEXTO_SUAVE, **forma)
+        estilo.configure("TCombobox", padding=(10, 5))
+        estilo.map("TCombobox", fieldbackground=[("readonly", "white")], bordercolor=[("focus", BORDE)], lightcolor=[("focus", "white")], selectbackground=[("readonly", "white")], selectforeground=[("readonly", TEXTO)])
+
+        # pestañas planas
+        estilo.configure("TNotebook", background="white", borderwidth=0, bordercolor="white", lightcolor="white", darkcolor="white", tabmargins=(0, 0, 0, 0))
+        estilo.configure("TNotebook.Tab", background=FONDO_NUMEROS, foreground=TEXTO_SUAVE, bordercolor=BORDE, lightcolor=FONDO_NUMEROS, darkcolor=FONDO_NUMEROS, focuscolor=FONDO_NUMEROS, padding=(12, 4), font=FUENTE_PANEL)
+        estilo.map("TNotebook.Tab", background=[("selected", "white")], foreground=[("selected", OSCURO)], lightcolor=[("selected", "white")], focuscolor=[("selected", "white")], expand=[("selected", (0, 0, 0, 0))])
+
+        # tablas
+        estilo.configure("Treeview", background="white", fieldbackground="white", foreground=TEXTO, font=FUENTE_CODIGO, rowheight=19, borderwidth=0, bordercolor="white", lightcolor="white", darkcolor="white")
+        estilo.map("Treeview", bordercolor=[("focus", "white")], lightcolor=[("focus", "white")])
+        estilo.configure("Treeview.Heading", background=FONDO_NUMEROS, foreground=TEXTO_SUAVE, relief="flat", borderwidth=0, bordercolor=FONDO_NUMEROS, lightcolor=FONDO_NUMEROS, darkcolor=FONDO_NUMEROS, padding=(8, 4), font=("Helvetica", 9, "bold"))
+        estilo.map("Treeview.Heading", background=[("active", FONDO_NUMEROS)])
 
     def _encabezado(self):
         tk.Label(self, text="Analizador Léxico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
