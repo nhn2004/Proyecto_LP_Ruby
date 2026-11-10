@@ -1,0 +1,98 @@
+import os
+import re
+import sys
+import tkinter as tk
+from datetime import datetime
+from tkinter import ttk, filedialog, messagebox
+
+CARPETA = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, CARPETA)
+import lexer
+
+USUARIOS = ["isabellaim", "Jmuniz27", "nhn2004"]
+
+FONDO = "white"
+FONDO_NUMEROS = "#f5f5f5"
+BORDE = "#d6d6d6"
+TEXTO_SUAVE = "#8a8a8a"
+TEXTO = "#333333"
+OSCURO = "#222222"
+FUENTE_CODIGO = ("Menlo", 10)
+FUENTE_PANEL = ("Helvetica", 10)
+ROJO = "#c62828"
+ROJO_FONDO = "#ffd9d9"
+
+
+class AnalizadorGUI(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Analizador Léxico Ruby - Grupo 2")
+        self.geometry("1100x650")
+        self.configure(bg=FONDO)
+        self.archivo_actual = None
+        self._estilos()
+        self._encabezado()
+        self._cuerpo()
+        self._barra_estado()
+
+    def _estilos(self):
+        pass  # Nahin (commit 8)
+
+    def _encabezado(self):
+        tk.Label(self, text="Analizador Léxico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
+
+        barra = tk.Frame(self, padx=14, pady=10, bg=FONDO)
+        barra.pack(fill="x")
+        ttk.Button(barra, text="Abrir .rb", command=self.abrir_archivo).pack(side="left")
+        ttk.Button(barra, text="Analizar", style="Principal.TButton", command=self.analizar).pack(side="left", padx=6)
+        ttk.Button(barra, text="Limpiar", command=self.limpiar).pack(side="left")
+
+        self.usuario = tk.StringVar(value=USUARIOS[0])
+        ttk.Combobox(barra, textvariable=self.usuario, values=USUARIOS, state="readonly", width=12).pack(side="right")
+        tk.Label(barra, text="Usuario:", bg=FONDO).pack(side="right", padx=(0, 6))
+
+    def _tarjeta(self, columna, titulo):
+        tarjeta = tk.Frame(self.cuerpo, bg=FONDO)
+        tarjeta.grid(row=0, column=columna, sticky="nsew", padx=(0, 7) if columna == 0 else (7, 0))
+        etiqueta = tk.Label(tarjeta, text=titulo, bg=FONDO, fg=TEXTO_SUAVE, anchor="w")
+        etiqueta.pack(fill="x", pady=(0, 4))
+        borde = tk.Frame(tarjeta, bg="white", highlightthickness=1, highlightbackground=BORDE)
+        borde.pack(fill="both", expand=True)
+        return etiqueta, borde
+
+    def _cuerpo(self):
+        # dos columnas del mismo ancho
+        self.cuerpo = tk.Frame(self, bg=FONDO, padx=14)
+        self.cuerpo.pack(fill="both", expand=True)
+        self.cuerpo.columnconfigure(0, weight=1, uniform="lados")
+        self.cuerpo.columnconfigure(1, weight=1, uniform="lados")
+        self.cuerpo.rowconfigure(0, weight=1)
+        # lado izquierdo con el código (Isabella, commit 4)
+
+        # lado derecho con los resultados (Juan, commit 3)
+
+    def _barra_estado(self):
+        self.estado = tk.StringVar(value="")
+        tk.Label(self, textvariable=self.estado, anchor="w", padx=14, pady=8, bg=FONDO, fg=TEXTO_SUAVE).pack(fill="x")
+
+    def abrir_archivo(self):
+        pass  # Isabella (commit 5)
+
+    def limpiar(self):
+        pass  # Isabella (commit 5)
+
+    def analizar(self):
+        pass  # Nahin (commit 6)
+
+    def _mostrar_log(self, texto):
+        pass  # Juan (commit 7)
+
+    def _llenar_resultados(self, tokens, errores):
+        pass  # Juan (commit 7)
+
+    def _ir_a_error(self, evento=None):
+        pass  # Juan (commit 9)
+
+
+if __name__ == "__main__":
+    AnalizadorGUI().mainloop()
