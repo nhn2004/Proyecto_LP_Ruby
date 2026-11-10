@@ -23,6 +23,37 @@ def linea_de_error(mensaje):
         return int(match.group(1))
     return None
 
+def armar_log(usuario, archivo, tokens, errores):
+    ahora = datetime.now()
+    nombre = f"lexico-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
+    texto = f"Archivo de log: {nombre}\n"
+    texto += f"Estudiante: {usuario}\n"
+    texto += f"Fecha de ejecución: {ahora.strftime('%d-%m-%Y %H:%M')}\n"
+    texto += f"Archivo analizado: {archivo}\n\n"
+    texto += "*********** TOKENS VÁLIDOS *********** \n"
+    if tokens:
+        for tok in tokens:
+            texto += f"[{tok.lineno}] {tok.type}: {tok.value}\n"
+    else:
+        texto += "No se encontraron tokens válidos.\n"
+    texto += "\n*********** ERRORES ***********\n"
+    if errores:
+        for err in errores:
+            texto += f"{err}\n"
+    else:
+        texto += "No se encontraron errores léxicos.\n"
+    return nombre, texto
+
+
+def guardar_log(nombre, texto):
+    # los logs de la interfaz van en su propia subcarpeta
+    carpeta_logs = os.path.join(CARPETA, "logs", "interfaz")
+    os.makedirs(carpeta_logs, exist_ok=True)
+    ruta = os.path.join(carpeta_logs, nombre)
+    with open(ruta, "w", encoding="utf-8") as f:
+        f.write(texto)
+    return ruta
+
 FONDO = "white"
 FONDO_NUMEROS = "#f5f5f5"
 BORDE = "#d6d6d6"
