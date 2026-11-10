@@ -87,6 +87,11 @@ def t_VAR_GLOBAL(t):
     t.type = 'VAR_GLOBAL'
     return t
 
+def t_VARIABLE_INVALIDA(t):
+    # @ @@ o $ seguido de un numero no es un nombre valido en Ruby
+    r'(@@|@|\$)[0-9]\w*'
+    errores_lexicos.append(f"Error léxico [línea {t.lexer.lineno}]: nombre de variable inválido '{t.value}', no puede empezar con un número")
+
 def t_COMENTARIO(t):
     # un comentario inicia con # y puede ir cualquier caracter excepto un salto de línea
     r'\#[^\n]*'
