@@ -79,7 +79,21 @@ class AnalizadorGUI(tk.Tk):
         self.cuerpo.columnconfigure(0, weight=1, uniform="lados")
         self.cuerpo.columnconfigure(1, weight=1, uniform="lados")
         self.cuerpo.rowconfigure(0, weight=1)
-        # lado izquierdo con el código (Isabella, commit 4)
+        # lado izquierdo con el código
+        self.lbl_archivo, marco = self._tarjeta(0, "CÓDIGO")
+        self.numeros = tk.Text(marco, width=4, state="disabled", takefocus=0, bd=0, highlightthickness=0, bg=FONDO_NUMEROS, fg=TEXTO_SUAVE, padx=6, font=FUENTE_CODIGO)
+        self.numeros.pack(side="left", fill="y")
+        scroll = tk.Scrollbar(marco, command=self._scroll_ambos)
+        scroll.pack(side="right", fill="y")
+        # solo lectura porque el código entra con click en "Abrir .rb"
+        self.editor = tk.Text(marco, wrap="none", bd=0, highlightthickness=0, padx=8, state="disabled", font=FUENTE_CODIGO, fg=TEXTO, yscrollcommand=lambda *a: self._sync(scroll, *a))
+        self.editor.pack(side="left", fill="both", expand=True)
+        self.editor.tag_configure("linea_error", background="#fff3b0")
+        self.editor.bind("<<Modified>>", self._al_modificar)
+
+        # lo que se muestra cuando no hay archivo
+        self.guia = tk.Label(self.editor, bg="white", fg=TEXTO_SUAVE, justify="center", font=FUENTE_PANEL, text="Usa \"Abrir .rb\" para cargar un algoritmo")
+        self._al_modificar()
 
         # lado derecho con los resultados (Juan, commit 3)
         _, der = self._tarjeta(1, "RESULTADOS")
@@ -104,6 +118,34 @@ class AnalizadorGUI(tk.Tk):
     def _barra_estado(self):
         self.estado = tk.StringVar(value="")
         tk.Label(self, textvariable=self.estado, anchor="w", padx=14, pady=8, bg=FONDO, fg=TEXTO_SUAVE).pack(fill="x")
+
+    def _sync(self, scroll, primero, ultimo):
+        scroll.set(primero, ultimo)
+        self.numeros.yview_moveto(primero)
+
+    def _scroll_ambos(self, *args):
+        self.editor.yview(*args)
+        self.numeros.yview(*args)
+
+    def _al_modificar(self, evento=None):
+        # sin esto el evento se repite sin parar
+        if evento is not None and not self.editor.edit_modified():
+            return
+        self.editor.edit_modified(False)
+        total = int(self.editor.index("end-1c").split(".")[0])
+        self.numeros.config(state="normal")
+        self.numeros.delete("1.0", "end")
+        for i in range(1, total + 1):
+            if i > 1:
+                self.numeros.insert("end", "\n")
+            self.numeros.insert("end", str(i))
+        self.numeros.config(state="disabled")
+        self.numeros.yview_moveto(self.editor.yview()[0])
+        self.editor.tag_remove("linea_error", "1.0", "end")
+        if self.editor.get("1.0", "end-1c"):
+            self.guia.place_forget()
+        else:
+            self.guia.place(relx=0.5, rely=0.45, anchor="center")
 
     def abrir_archivo(self):
         pass  # Isabella (commit 5)
