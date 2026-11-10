@@ -32,4 +32,4 @@ python gui.py
 Los tokens, errores y el log salen en las pestañas de la derecha. Si da clic en un error, el editor se va a esa línea.
 
 ## Logs
-Cada análisis guarda un log con el nombre `lexico-usuario-dia-mes-año-HHhMM.txt`, por ejemplo `lexico-isabellaim-09-11-2026-19h29.txt`. Los que se generan desde la interfaz se guardan en `logs/interfaz/`.
+Cada análisis guarda un log con el nombre `lexico-usuario-dia-mes-año-HHhMM.txt`, por ejemplo `lexico-isabellaim-09-11-2026-19h29.txt`. Se guardan en `logs/`, dentro de una carpeta con el nombre de cada usuario.
