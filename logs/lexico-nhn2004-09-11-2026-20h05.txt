@@ -1,0 +1,36 @@
+Archivo de log: lexico-nhn2004-09-11-2026-20h05.txt
+Estudiante: nhn2004
+Fecha de ejecución: 09-11-2026 20:05
+Archivo analizado: algoritmos/prueba1_nahin.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[1] LAMBDA_FLECHA: ->
+[1] PAREN_IZQ: (
+[1] ID: x
+[1] PAREN_DER: )
+[1] LLAVE_IZQ: {
+[2] PAREN_IZQ: (
+[2] ID: x
+[2] MAYOR_IGUAL: >=
+[2] ENTERO: 10
+[2] AND_LOGICO: &&
+[2] ID: x
+[2] MENOR_IGUAL: <=
+[2] ENTERO: 20
+[2] PAREN_DER: )
+[2] OR_LOGICO: ||
+[2] PAREN_IZQ: (
+[2] ID: x
+[2] DISTINTO: !=
+[2] ENTERO: 0
+[2] PAREN_DER: )
+[3] LLAVE_DER: }
+[4] ENTERO: 1
+[4] RANGO_INCLUSIVO: ..
+[4] ENTERO: 10
+[5] ENTERO: 1
+[5] RANGO_EXCLUSIVO: ...
+[5] ENTERO: 5
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.
