@@ -1,0 +1,116 @@
+Archivo de log: lexico-isabellaim-09-11-2026-19h33.txt
+Estudiante: isabellaim
+Fecha de ejecución: 09-11-2026 19:33
+Archivo analizado: algoritmos/prueba2_isabella.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[8] MODULE: module
+[8] CONSTANTE: Clima
+[9] CONSTANTE: TEMP_CALOR
+[9] IGUAL: =
+[9] ENTERO: 28
+[10] VAR_GLOBAL: $estacion_activa
+[10] IGUAL: =
+[10] TRUE: true
+[11] DEF: def
+[11] SELF: self
+[11] PUNTO: .
+[11] ID: clasificar
+[11] PAREN_IZQ: (
+[11] ID: ciudad
+[11] COMA: ,
+[11] ID: grados
+[11] PAREN_DER: )
+[12] CASE: case
+[12] ID: grados
+[13] WHEN: when
+[13] RESTA: -
+[13] ENTERO: 10
+[13] RANGO_INCLUSIVO: ..
+[13] ENTERO: 12
+[13] THEN: then
+[13] PUTS: puts
+[13] CADENA: "#{ciudad}: frio"
+[14] WHEN: when
+[14] ENTERO: 13
+[14] RANGO_INCLUSIVO: ..
+[14] CONSTANTE: TEMP_CALOR
+[14] THEN: then
+[14] PUTS: puts
+[14] CADENA: "#{ciudad}: templado"
+[15] ELSE: else
+[15] PUTS: puts
+[15] CADENA: "#{ciudad}: calor"
+[16] END: end
+[17] END: end
+[19] DEF: def
+[19] SELF: self
+[19] PUNTO: .
+[19] ID: avisar
+[20] YIELD: yield
+[20] IF: if
+[20] ID: block_given?
+[21] END: end
+[22] END: end
+[24] ID: lecturas
+[24] IGUAL: =
+[24] CORCHETE_IZQ: [
+[24] CORCHETE_IZQ: [
+[24] CADENA: "Quito"
+[24] COMA: ,
+[24] ENTERO: 11
+[24] CORCHETE_DER: ]
+[24] COMA: ,
+[24] CORCHETE_IZQ: [
+[24] CADENA: "Cuenca"
+[24] COMA: ,
+[24] ENTERO: 16
+[24] CORCHETE_DER: ]
+[24] COMA: ,
+[24] CORCHETE_IZQ: [
+[24] CADENA: "Guayaquil"
+[24] COMA: ,
+[24] ENTERO: 31
+[24] CORCHETE_DER: ]
+[24] CORCHETE_DER: ]
+[26] BEGIN: begin
+[27] FOR: for
+[27] ID: lectura
+[27] IN: in
+[27] ID: lecturas
+[27] DO: do
+[28] BREAK: break
+[28] UNLESS: unless
+[28] VAR_GLOBAL: $estacion_activa
+[29] CONSTANTE: Clima
+[29] PUNTO: .
+[29] ID: clasificar
+[29] PAREN_IZQ: (
+[29] ID: lectura
+[29] CORCHETE_IZQ: [
+[29] ENTERO: 0
+[29] CORCHETE_DER: ]
+[29] COMA: ,
+[29] ID: lectura
+[29] CORCHETE_IZQ: [
+[29] ENTERO: 1
+[29] CORCHETE_DER: ]
+[29] PAREN_DER: )
+[30] END: end
+[31] CONSTANTE: Clima
+[31] PUNTO: .
+[31] ID: avisar
+[31] LLAVE_IZQ: {
+[31] PUTS: puts
+[31] CADENA: "Lecturas completas"
+[31] LLAVE_DER: }
+[32] RESCUE: rescue
+[33] PUTS: puts
+[33] CADENA: "Error al leer los sensores"
+[34] ENSURE: ensure
+[35] PUTS: puts
+[35] CADENA: "Estacion apagada"
+[36] END: end
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.
