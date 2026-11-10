@@ -23,18 +23,18 @@ def probar_lexer_consola():
     nombre_log = f"lexico-{usuario}-{fecha_hora}.txt"
     
     log_texto = f"Archivo de log: {nombre_log}\n"
-    log_texto += f"Desarrollador: {usuario}\n"
+    log_texto += f"Estudiante: {usuario}\n"
     log_texto += f"Fecha de ejecución: {datetime.now().strftime('%d-%m-%Y %H:%M')}\n"
     log_texto += f"Archivo analizado: {ruta}\n\n"
     
-    log_texto += "=== TOKENS RECONOCIDOS ===\n"
+    log_texto += "*********** TOKENS VÁLIDOS *********** \n"
     if tokens_encontrados:
         for tok in tokens_encontrados:
-            log_texto += f"Linea {tok.lineno}: {tok.type} -> '{tok.value}'\n"
+            log_texto += f"[{tok.lineno}] {tok.type}: {tok.value}\n"
     else:
         log_texto += "No se encontraron tokens válidos.\n"
         
-    log_texto += "\n=== ERRORES LÉXICOS ===\n"
+    log_texto += "\n*********** ERRORES ***********\n"
     if errores_encontrados:
         for err in errores_encontrados:
             log_texto += f"{err}\n"
