@@ -148,10 +148,31 @@ class AnalizadorGUI(tk.Tk):
             self.guia.place(relx=0.5, rely=0.45, anchor="center")
 
     def abrir_archivo(self):
-        pass  # Isabella (commit 5)
+        ruta = filedialog.askopenfilename(
+            initialdir=os.path.join(CARPETA, "algoritmos"),
+            filetypes=[("Ruby", "*.rb"), ("Todos", "*.*")])
+        if not ruta:
+            return
+        with open(ruta, encoding="utf-8") as f:
+            contenido = f.read()
+        self._poner_codigo(contenido)
+        self.archivo_actual = ruta
+        self.lbl_archivo.config(text=f"CÓDIGO: {os.path.relpath(ruta, CARPETA)}")
+
+    def _poner_codigo(self, contenido):
+        # se activa un momento para poder cambiar el texto
+        self.editor.config(state="normal")
+        self.editor.delete("1.0", "end")
+        self.editor.insert("1.0", contenido)
+        self.editor.config(state="disabled")
 
     def limpiar(self):
-        pass  # Isabella (commit 5)
+        self._poner_codigo("")
+        self.archivo_actual = None
+        self.lbl_archivo.config(text="CÓDIGO")
+        self._llenar_resultados([], [])
+        self._mostrar_log("")
+        self.estado.set("")
 
     def analizar(self):
         pass  # Nahin (commit 6)
