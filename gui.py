@@ -209,10 +209,27 @@ class AnalizadorGUI(tk.Tk):
         pass  # Nahin (commit 6)
 
     def _mostrar_log(self, texto):
-        pass  # Juan (commit 7)
+        self.texto_log.config(state="normal")
+        self.texto_log.delete("1.0", "end")
+        self.texto_log.insert("1.0", texto)
+        self.texto_log.config(state="disabled")
 
     def _llenar_resultados(self, tokens, errores):
-        pass  # Juan (commit 7)
+        self.tabla_tokens.delete(*self.tabla_tokens.get_children())
+        self.tabla_errores.delete(*self.tabla_errores.get_children())
+
+        for i, tok in enumerate(tokens, start=1):
+            self.tabla_tokens.insert("", "end", values=(i, tok.type, tok.value, tok.lineno))
+
+        self.editor.tag_remove("linea_error", "1.0", "end")
+        self.editor.tag_remove("error_elegido", "1.0", "end")
+        self.numeros.tag_remove("error_elegido", "1.0", "end")
+
+        for err in errores:
+            linea = linea_de_error(err)
+            self.tabla_errores.insert("", "end", values=(linea, err))
+            if linea:
+                self.editor.tag_add("linea_error", f"{linea}.0", f"{linea}.end")
 
     def _ir_a_error(self, evento=None):
         pass  # Juan (commit 9)
