@@ -11,6 +11,18 @@ import lexer
 
 USUARIOS = ["isabellaim", "Jmuniz27", "nhn2004"]
 
+def analizar_codigo(codigo):
+    # llama al lexer y devuelve copias de la lista de tokens y de errores
+    tokens, errores = lexer.tokenizar(codigo)
+    return list(tokens), list(errores)
+
+def linea_de_error(mensaje):
+    # num de línea de un mensaje de error
+    match = re.search(r"línea (\d+)", mensaje)
+    if match:
+        return int(match.group(1))
+    return None
+
 FONDO = "white"
 FONDO_NUMEROS = "#f5f5f5"
 BORDE = "#d6d6d6"
