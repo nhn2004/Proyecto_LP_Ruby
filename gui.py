@@ -82,6 +82,24 @@ class AnalizadorGUI(tk.Tk):
         # lado izquierdo con el código (Isabella, commit 4)
 
         # lado derecho con los resultados (Juan, commit 3)
+        _, der = self._tarjeta(1, "RESULTADOS")
+        self.pestanas = ttk.Notebook(der)
+        self.pestanas.pack(fill="both", expand=True)
+        # columna ancho y si se estira
+        self.tabla_tokens = self._tabla([("#", 50, False), ("Token", 170, False), ("Lexema", 200, True), ("Línea", 60, False)])
+        self.tabla_errores = self._tabla([("Línea", 60, False), ("Mensaje", 400, True)])
+        self.texto_log = tk.Text(self.pestanas, wrap="none", state="disabled", bd=0, highlightthickness=0, padx=8, pady=6, font=FUENTE_CODIGO, fg=TEXTO)
+        self.pestanas.add(self.tabla_tokens, text="Tokens")
+        self.pestanas.add(self.tabla_errores, text="Errores")
+        self.pestanas.add(self.texto_log, text="Log")
+
+    def _tabla(self, columnas):
+        nombres = [c[0] for c in columnas]
+        tabla = ttk.Treeview(self.pestanas, columns=nombres, show="headings")
+        for nombre, ancho, estira in columnas:
+            tabla.heading(nombre, text=nombre, anchor="w")
+            tabla.column(nombre, width=ancho, minwidth=40, stretch=estira, anchor="w")
+        return tabla
 
     def _barra_estado(self):
         self.estado = tk.StringVar(value="")
