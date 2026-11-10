@@ -1,0 +1,116 @@
+Archivo de log: lexico-Jmuniz27-09-11-2026-20h10.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 09-11-2026 20:10
+Archivo analizado: algoritmos/prueba3_juan.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[6] ID: cuotas
+[6] IGUAL: =
+[6] ENTERO: 12
+[7] ID: monto
+[7] IGUAL: =
+[7] ENTERO: 1_500
+[8] ID: recargo
+[8] IGUAL: =
+[8] FLOTANTE: 0.035
+[9] ID: limite
+[9] IGUAL: =
+[9] FLOTANTE: 2.5e4
+[10] ID: codigo_tienda
+[10] IGUAL: =
+[10] ENTERO: 0xFF
+[11] ID: permisos
+[11] IGUAL: =
+[11] ENTERO: 0b0110
+[14] ID: cliente
+[14] IGUAL: =
+[14] CADENA: 'Maria Perez'
+[15] ID: nota
+[15] IGUAL: =
+[15] CADENA: "Cliente \"frecuente\" con #{cuotas} cuotas"
+[16] ID: estado
+[16] IGUAL: =
+[16] SIMBOLO: :pendiente
+[17] ID: metodo
+[17] IGUAL: =
+[17] SIMBOLO: :tarjeta?
+[20] ID: interes
+[20] IGUAL: =
+[20] ID: monto
+[20] MULTIPLICACION: *
+[20] ID: recargo
+[21] ID: total
+[21] IGUAL: =
+[21] ID: monto
+[21] SUMA: +
+[21] ID: interes
+[21] RESTA: -
+[21] ENTERO: 50
+[22] ID: pago_mensual
+[22] IGUAL: =
+[22] ID: total
+[22] DIVISION: /
+[22] ID: cuotas
+[23] ID: residuo
+[23] IGUAL: =
+[23] ID: monto
+[23] MODULO: %
+[23] ID: cuotas
+[24] ID: crecimiento
+[24] IGUAL: =
+[24] PAREN_IZQ: (
+[24] ENTERO: 1
+[24] SUMA: +
+[24] ID: recargo
+[24] PAREN_DER: )
+[24] POTENCIA: **
+[24] ID: cuotas
+[27] ID: pagado
+[27] COMA: ,
+[27] ID: saldo
+[27] IGUAL: =
+[27] ENTERO: 0
+[27] COMA: ,
+[27] ID: total
+[28] ID: pagado
+[28] MAS_IGUAL: +=
+[28] ID: pago_mensual
+[29] ID: saldo
+[29] MENOS_IGUAL: -=
+[29] ID: pago_mensual
+[30] ID: saldo
+[30] POR_IGUAL: *=
+[30] ENTERO: 1
+[31] ID: saldo
+[31] DIVIDIDO_IGUAL: /=
+[31] ENTERO: 1
+[32] ID: residuo
+[32] MODULO_IGUAL: %=
+[32] ENTERO: 5
+[33] ID: crecimiento
+[33] POTENCIA_IGUAL: **=
+[33] ENTERO: 2
+[34] ID: descuento
+[34] OR_IGUAL: ||=
+[34] ENTERO: 0
+[35] ID: aprobado
+[35] IGUAL: =
+[35] TRUE: true
+[36] ID: aprobado
+[36] AND_IGUAL: &&=
+[36] ID: saldo
+[36] MENOR: <
+[36] ID: limite
+[38] PUTS: puts
+[38] CADENA: "Cliente: "
+[38] SUMA: +
+[38] ID: cliente
+[39] PUTS: puts
+[39] ID: nota
+[40] PUTS: puts
+[40] CADENA: "Estado: #{estado}, metodo #{metodo}"
+[41] PUTS: puts
+[41] CADENA: "Saldo pendiente: #{saldo.round(2)}"
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.

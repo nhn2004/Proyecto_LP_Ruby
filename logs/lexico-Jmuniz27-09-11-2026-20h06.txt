@@ -1,0 +1,135 @@
+Archivo de log: lexico-Jmuniz27-09-11-2026-20h06.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 09-11-2026 20:06
+Archivo analizado: algoritmos/prueba2_juan.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[5] CONSTANTE: IVA
+[5] IGUAL: =
+[5] FLOTANTE: 0.15
+[7] ID: inventario
+[7] IGUAL: =
+[7] LLAVE_IZQ: {
+[8] CADENA: "arroz"
+[8] FLECHA_HASH: =>
+[8] LLAVE_IZQ: {
+[8] ID: precio
+[8] DOS_PUNTOS: :
+[8] FLOTANTE: 1.25
+[8] COMA: ,
+[8] ID: stock
+[8] DOS_PUNTOS: :
+[8] ENTERO: 40
+[8] LLAVE_DER: }
+[8] COMA: ,
+[9] CADENA: "leche"
+[9] FLECHA_HASH: =>
+[9] LLAVE_IZQ: {
+[9] ID: precio
+[9] DOS_PUNTOS: :
+[9] FLOTANTE: 0.95
+[9] COMA: ,
+[9] ID: stock
+[9] DOS_PUNTOS: :
+[9] ENTERO: 25
+[9] LLAVE_DER: }
+[10] LLAVE_DER: }
+[12] DEF: def
+[12] ID: precio_final
+[12] PAREN_IZQ: (
+[12] ID: precio
+[12] COMA: ,
+[12] ID: cantidad
+[12] IGUAL: =
+[12] ENTERO: 1
+[12] COMA: ,
+[12] ID: descuento
+[12] IGUAL: =
+[12] ENTERO: 0
+[12] PAREN_DER: )
+[13] ID: subtotal
+[13] IGUAL: =
+[13] ID: precio
+[13] MULTIPLICACION: *
+[13] ID: cantidad
+[14] ID: subtotal
+[14] MENOS_IGUAL: -=
+[14] ID: subtotal
+[14] MULTIPLICACION: *
+[14] ID: descuento
+[15] ID: subtotal
+[15] MAS_IGUAL: +=
+[15] ID: subtotal
+[15] CONSTANTE: IVA
+[16] RETURN: return
+[16] ID: subtotal
+[17] END: end
+[19] ID: total
+[19] IGUAL: =
+[19] FLOTANTE: 0.0
+[20] ID: productos
+[20] IGUAL: =
+[20] ID: inventario
+[20] PUNTO: .
+[20] ID: keys
+[21] ID: i
+[21] IGUAL: =
+[21] ENTERO: 0
+[22] WHILE: while
+[22] ID: i
+[22] MENOR: <
+[22] ID: productos
+[22] PUNTO: .
+[22] ID: length
+[23] ID: datos
+[23] IGUAL: =
+[23] ID: inventario
+[23] CORCHETE_IZQ: [
+[23] ID: productos
+[23] CORCHETE_IZQ: [
+[23] ID: i
+[23] CORCHETE_DER: ]
+[23] CORCHETE_DER: ]
+[24] ID: total
+[24] MAS_IGUAL: +=
+[24] ID: precio_final
+[24] PAREN_IZQ: (
+[24] ID: datos
+[24] CORCHETE_IZQ: [
+[24] SIMBOLO: :precio
+[24] CORCHETE_DER: ]
+[24] COMA: ,
+[24] ENTERO: 2
+[24] PAREN_DER: )
+[24] ENTERO: 1
+[25] ID: datos
+[25] CORCHETE_IZQ: [
+[25] SIMBOLO: :stock
+[25] CORCHETE_DER: ]
+[25] MENOS_IGUAL: -=
+[25] ENTERO: 2
+[26] ID: i
+[26] MAS_IGUAL: +=
+[26] ENTERO: 1
+[27] END: end
+[29] ID: ganancia
+[29] IGUAL: =
+[29] ID: total
+[29] ENTERO: 2
+[30] ID: precio_euros
+[30] IGUAL: =
+[30] ID: total
+[30] MULTIPLICACION: *
+[30] FLOTANTE: 0.92
+[31] PUTS: puts
+[31] CADENA: "Total vendido: #{total}"
+[32] PUTS: puts
+[32] CONSTANTE: Ganancia
+[32] DOS_PUNTOS: :
+
+*********** ERRORES ***********
+Error léxico [línea 15]: carácter no reconocido '¿'
+Error léxico [línea 24]: carácter no reconocido '@'
+Error léxico [línea 29]: carácter no reconocido '^'
+Error léxico [línea 30]: carácter no reconocido '€'
+Error léxico [línea 32]: carácter no reconocido '`'
