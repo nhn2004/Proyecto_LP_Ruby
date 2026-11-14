@@ -23,7 +23,8 @@ def linea_de_error(mensaje):
         return int(match.group(1))
     return None
 
-def armar_log(usuario, archivo, tokens, errores):
+
+def armar_log_lexico(usuario, archivo, tokens, errores):
     ahora = datetime.now()
     nombre = f"lexico-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
     texto = f"Archivo de log: {nombre}\n"
@@ -44,6 +45,21 @@ def armar_log(usuario, archivo, tokens, errores):
         texto += "No se encontraron errores léxicos.\n"
     return nombre, texto
 
+def armar_log_sintactico(usuario, archivo, errores_sint):
+    ahora = datetime.now()
+    nombre = f"sintactico-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
+    texto = f"Archivo de log: {nombre}\n"
+    texto += f"Estudiante: {usuario}\n"
+    texto += f"Fecha de ejecución: {ahora.strftime('%d-%m-%Y %H:%M')}\n"
+    texto += f"Archivo analizado: {archivo}\n\n"
+    texto += "*********** ERRORES SINTÁCTICOS ***********\n"
+    if errores_sint:
+        for err in errores_sint:
+            texto += f"{err}\n"
+    else:
+        texto += "No se encontraron errores sintácticos.\n"
+    return nombre, texto
+
 
 def guardar_log(usuario, nombre, texto):
     # La ruta crea la subcarpeta con el nombre del usuario de forma dinámica
@@ -53,6 +69,9 @@ def guardar_log(usuario, nombre, texto):
     with open(ruta, "w", encoding="utf-8") as f:
         f.write(texto)
     return ruta
+
+
+
 
 FONDO = "white"
 FONDO_NUMEROS = "#f5f5f5"
@@ -106,7 +125,7 @@ class AnalizadorGUI(tk.Tk):
         estilo.map("Treeview.Heading", background=[("active", FONDO_NUMEROS)])
 
     def _encabezado(self):
-        tk.Label(self, text="Analizador Léxico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
+        tk.Label(self, text="Analizador Léxico y Semantico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
 
         barra = tk.Frame(self, padx=14, pady=10, bg=FONDO)
         barra.pack(fill="x")
@@ -233,24 +252,45 @@ class AnalizadorGUI(tk.Tk):
         self._mostrar_log("")
         self.estado.set("")
 
-
-
     def analizar(self):
         if not self.archivo_actual:
             messagebox.showinfo("Aviso", "Primero abre un archivo .rb.")
             return
 
         codigo = self.editor.get("1.0", "end-1c")
-        tokens, errores = analizar_codigo(codigo)
-        self._llenar_resultados(tokens, errores)
-
-        archivo = os.path.relpath(self.archivo_actual, CARPETA)
         usuario_actual = self.usuario.get()
-        nombre, texto = armar_log(usuario_actual, archivo, tokens, errores)
-        guardar_log(usuario_actual, nombre, texto)
+        archivo = os.path.relpath(self.archivo_actual, CARPETA)
 
-        self._mostrar_log(texto)
-        self.estado.set(f"Log guardado: logs/{usuario_actual}/{nombre}")
+        # PASO 1: Ejecutar el Análisis Léxico
+        tokens, errores_lex = analizar_codigo(codigo)
+
+        # Generar y guardar el log léxico
+        nombre_lex, texto_lex = armar_log_lexico(usuario_actual, archivo, tokens, errores_lex)
+        guardar_log(usuario_actual, nombre_lex, texto_lex)
+
+        # Si hay errores léxicos, los mostramos en la UI y detenemos el flujo
+        if errores_lex:
+            self._llenar_resultados(tokens, errores_lex)
+            self._mostrar_log(texto_lex)
+            self.estado.set(f"Detenido por errores léxicos. Log guardado: logs/{usuario_actual}/{nombre_lex}")
+            return
+
+        # PASO 2: Si el léxico pasó limpio, ejecutamos el Análisis Sintáctico (Parser)
+        import parser
+        _, errores_sint = parser.parsear(codigo)
+
+        # Llenamos los resultados en la UI (esto poblará la tabla de errores y marcará las líneas en amarillo)
+        self._llenar_resultados(tokens, errores_sint)
+
+        # Generar y guardar el log sintáctico
+        nombre_sint, texto_sint = armar_log_sintactico(usuario_actual, archivo, errores_sint)
+        guardar_log(usuario_actual, nombre_sint, texto_sint)
+
+        # Mostramos el log sintáctico en la pestaña de Log de la GUI
+        self._mostrar_log(texto_sint)
+        self.estado.set(f"Análisis exitoso. Log sintáctico guardado: logs/{usuario_actual}/{nombre_sint}")
+
+
 
     def _mostrar_log(self, texto):
         self.texto_log.config(state="normal")

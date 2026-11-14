@@ -40,6 +40,8 @@ evaluar_accesos = ->(lista) {
 
 evaluar_accesos.call(usuarios)
 
+calcular = -> x { puts x }
+
 # dejaré un arroba suelto y un signo de interrogación invertido para provocar la función de error 
 #calculo_roto = 100 @ 5
 #¿activo = false
