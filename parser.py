@@ -54,7 +54,7 @@ def p_empty(p):
 
 
 
-# --- INICIO JUAN - expresiones aritmeticas ---
+# Juan, expresiones aritmeticas
 def p_valor_literal(p):
     '''valor : ENTERO
              | FLOTANTE
@@ -85,7 +85,7 @@ def p_expresion_unaria(p):
 def p_expresion_potencia(p):
     "expresion_potencia : expresion_negacion POTENCIA expresion_unaria"
     p[0] = ('aritmetica', p[2], p[1], p[3])
-# --- FIN JUAN - expresiones aritmeticas ---
+# fin Juan
 
 
 # INICIO Isa, asignacion e impresion
@@ -185,6 +185,31 @@ def p_valor_llamada_punto(p):
     argumentos = p[5] if len(p) == 7 else []
     p[0] = ('llamada_metodo', p[1], p[3], argumentos)
 # fin Nahin
+
+# Juan, while y asignacion multiple
+def p_sentencia_while(p):
+    "sentencia : sentencia_while"
+    p[0] = p[1]
+
+# el do es opcional como en ruby ej while i < 5 do
+def p_sentencia_while_cuerpo(p):
+    '''sentencia_while : WHILE expresion DO lista_sentencias END
+                       | WHILE expresion lista_sentencias END'''
+    cuerpo = p[4] if len(p) == 6 else p[3]
+    p[0] = ('while', p[2], cuerpo)
+
+# ej a, b = 1, 2
+def p_asignacion_multiple(p):
+    "asignacion : lista_variables IGUAL lista_expresiones"
+    p[0] = ('asignacion_multiple', p[1], p[3])
+
+# empieza con dos variables para que no choque con la asignacion simple
+def p_lista_variables(p):
+    '''lista_variables : lista_variables COMA ID
+                       | ID COMA ID'''
+    p[0] = p[1] + [p[3]] if isinstance(p[1], list) else [p[1], p[3]]
+# fin Juan
+
 
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
