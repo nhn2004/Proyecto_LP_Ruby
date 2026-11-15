@@ -262,11 +262,11 @@ def p_valor_acceso_arreglo(p):
 
 # Nahin, case when rangos y asignacion especial
 def p_sentencia_case(p):
-    '''sentencia : sentencia_case'''
+    "sentencia : sentencia_case"
     p[0] = p[1]
 
 def p_sentencia_case_cuerpo(p):
-    '''sentencia_case : CASE expresion lista_when else_opcional END'''
+    "sentencia_case : CASE expresion lista_when else_opcional END"
     p[0] = ('case', p[2], p[3], p[4])
 
 def p_lista_when(p):
@@ -310,6 +310,47 @@ def p_par(p):
            | ID DOS_PUNTOS expresion'''
     p[0] = ('par', p[1], p[3])
 # fin Juan
+
+#Inicio Isa funciones con return
+def p_sentencia_funcion(p):
+    "sentencia : definicion_funcion"
+    p[0] = p[1]
+
+#en nuestra implementacion la funcion siempre lleva parentesis aunque no tenga parametros
+def p_definicion_funcion(p):
+    '''definicion_funcion : DEF ID PAREN_IZQ lista_parametros PAREN_DER lista_sentencias END
+                          | DEF ID PAREN_IZQ PAREN_DER lista_sentencias END'''
+    if len(p) == 8:
+        p[0] = ('funcion', p[2], p[4], p[6])
+    else:
+        p[0] = ('funcion', p[2], [], p[5])
+
+def p_lista_parametros(p):
+    '''lista_parametros : lista_parametros COMA parametro
+                        | parametro'''
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    else:
+        p[0] = [p[1]]
+
+def p_parametro(p):
+    "parametro : ID"
+    p[0] = ('parametro', p[1])
+
+#un ejemplo puede ser return base * altura
+def p_sentencia_return(p):
+    "sentencia : RETURN expresion"
+    p[0] = ('return', p[2])
+
+# Llamada a funciones con argumentos y sin
+def p_valor_llamada_funcion(p):
+    '''valor : ID PAREN_IZQ lista_expresiones PAREN_DER
+             | ID PAREN_IZQ PAREN_DER'''
+    if len(p) == 5:
+        p[0] = ('llamada', p[1], p[3])
+    else:
+        p[0] = ('llamada', p[1], [])
+# Fin Isa
 
 
 # Nahin, Manejo de errores sintácticos
