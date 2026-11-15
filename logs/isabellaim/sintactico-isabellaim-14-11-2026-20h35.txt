@@ -1,0 +1,7 @@
+Archivo de log: sintactico-isabellaim-14-11-2026-20h35.txt
+Estudiante: isabellaim
+Fecha de ejecución: 14-11-2026 20:35
+Archivo analizado: algoritmos/prueba_sintactico3_isabella.rb
+
+*********** ERRORES SINTÁCTICOS ***********
+No se encontraron errores sintácticos.
