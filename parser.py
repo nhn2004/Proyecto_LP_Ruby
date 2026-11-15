@@ -134,6 +134,58 @@ def p_lista_expresiones(p):
     p[0] = p[1] + [p[3]] if len(p) == 4 else [p[1]]
 # FIN Isa
 
+# Nahin, condiciones y entrada de datos
+def p_expresion_comparacion(p):
+    '''expresion_comparacion : expresion_suma MENOR expresion_suma
+                             | expresion_suma MAYOR expresion_suma
+                             | expresion_suma MENOR_IGUAL expresion_suma
+                             | expresion_suma MAYOR_IGUAL expresion_suma'''
+    p[0] = ('comparacion', p[2], p[1], p[3])
+
+def p_expresion_igualdad(p):
+    '''expresion_igualdad : expresion_comparacion IGUAL_IGUAL expresion_comparacion
+                          | expresion_comparacion DISTINTO expresion_comparacion
+                          | expresion_comparacion IGUAL_CASO expresion_comparacion
+                          | expresion_comparacion NAVE expresion_comparacion'''
+    p[0] = ('comparacion', p[2], p[1], p[3])
+
+# && tiene mas prioridad que ||
+def p_expresion_y(p):
+    '''expresion_y : expresion_y AND_LOGICO expresion_igualdad'''
+    p[0] = ('logica', p[2], p[1], p[3])
+
+def p_expresion_o(p):
+    '''expresion_o : expresion_o OR_LOGICO expresion_y'''
+    p[0] = ('logica', p[2], p[1], p[3])
+
+# ! tiene la prioridad mas alta y not la mas baja
+def p_expresion_negacion(p):
+    '''expresion_negacion : NOT_LOGICO expresion_negacion'''
+    p[0] = ('negacion', p[1], p[2])
+
+def p_expresion_not(p):
+    '''expresion_not : NOT expresion_not'''
+    p[0] = ('negacion', p[1], p[2])
+
+# and y or son las de menor prioridad
+def p_expresion_and_or(p):
+    '''expresion : expresion AND expresion_not
+                 | expresion OR expresion_not'''
+    p[0] = ('logica', p[2], p[1], p[3])
+
+def p_valor_gets(p):
+    '''valor : GETS'''
+    p[0] = ('entrada', p[1])
+
+# llamadas con punto que se pueden encadenar ej gets.chomp.to_i o Curso.new("LP")
+def p_valor_llamada_punto(p):
+    '''valor : valor PUNTO ID
+             | valor PUNTO ID PAREN_IZQ PAREN_DER
+             | valor PUNTO ID PAREN_IZQ lista_expresiones PAREN_DER'''
+    argumentos = p[5] if len(p) == 7 else []
+    p[0] = ('llamada_metodo', p[1], p[3], argumentos)
+# fin Nahin
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
