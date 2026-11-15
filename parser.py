@@ -364,6 +364,29 @@ def p_valor_lambda(p):
 # fin Nahin
 
 
+# Juan, clases y parametros opcionales
+def p_sentencia_clase(p):
+    "sentencia : definicion_clase"
+    p[0] = p[1]
+
+# los metodos van con def y las propiedades son las @variables
+def p_definicion_clase(p):
+    '''definicion_clase : CLASS CONSTANTE lista_sentencias END
+                        | CLASS CONSTANTE END'''
+    p[0] = ('clase', p[2], p[3] if len(p) == 5 else [])
+
+# variable de clase que comparten todos los objetos ej @@total = 0
+def p_asignacion_variable_clase(p):
+    "asignacion : VAR_CLASE IGUAL expresion"
+    p[0] = ('asignacion', p[1], p[3])
+
+# parametro con valor por defecto ej saludo = "Hola"
+def p_parametro_opcional(p):
+    "parametro : ID IGUAL expresion"
+    p[0] = ('parametro_opcional', p[1], p[3])
+# fin Juan
+
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
