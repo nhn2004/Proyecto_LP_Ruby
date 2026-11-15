@@ -1,0 +1,72 @@
+Archivo de log: lexico-nhn2004-14-11-2026-23h18.txt
+Estudiante: nhn2004
+Fecha de ejecución: 14-11-2026 23:18
+Archivo analizado: algoritmos\prueba_sintactico1_nahin.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[1] CONSTANTE: PI
+[1] IGUAL: =
+[1] FLOTANTE: 3.1416
+[2] VAR_INSTANCIA: @saldo
+[2] IGUAL: =
+[2] FLOTANTE: 100.0
+[3] VAR_GLOBAL: $modo_debug
+[3] IGUAL: =
+[3] FALSE: false
+[4] ID: semana
+[4] IGUAL: =
+[4] ENTERO: 1
+[4] RANGO_INCLUSIVO: ..
+[4] ENTERO: 7
+[5] ID: dias
+[5] IGUAL: =
+[5] ENTERO: 1
+[5] RANGO_EXCLUSIVO: ...
+[5] ENTERO: 7
+[6] ID: edad
+[6] IGUAL: =
+[6] ENTERO: 15
+[7] CASE: case
+[7] ID: edad
+[8] WHEN: when
+[8] ENTERO: 0
+[8] RANGO_INCLUSIVO: ..
+[8] ENTERO: 12
+[8] THEN: then
+[8] PUTS: puts
+[8] CADENA: "Nino"
+[9] WHEN: when
+[9] ENTERO: 13
+[9] RANGO_INCLUSIVO: ..
+[9] ENTERO: 17
+[9] THEN: then
+[9] PUTS: puts
+[9] CADENA: "Adolescente"
+[10] ELSE: else
+[10] PUTS: puts
+[10] CADENA: "Adulto"
+[11] END: end
+[12] ID: nota
+[12] IGUAL: =
+[12] ENTERO: 8
+[13] CASE: case
+[13] ID: nota
+[14] WHEN: when
+[14] ENTERO: 9
+[14] RANGO_INCLUSIVO: ..
+[14] ENTERO: 10
+[15] PUTS: puts
+[15] CADENA: "Excelente"
+[16] WHEN: when
+[16] ENTERO: 7
+[16] RANGO_EXCLUSIVO: ...
+[16] ENTERO: 9
+[17] PUTS: puts
+[17] CADENA: "Aprobado"
+[18] ELSE: else
+[19] PUTS: puts
+[19] CADENA: "Reprobado"
+[20] END: end
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.
