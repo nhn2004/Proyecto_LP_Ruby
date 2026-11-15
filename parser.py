@@ -293,6 +293,25 @@ def p_asignacion_especial(p):
 # fin Nahin
 
 
+# Juan, hashes
+def p_valor_hash(p):
+    '''valor : LLAVE_IZQ lista_pares LLAVE_DER
+             | LLAVE_IZQ LLAVE_DER'''
+    p[0] = ('hash', p[2] if len(p) == 4 else [])
+
+def p_lista_pares(p):
+    '''lista_pares : lista_pares COMA par
+                   | par'''
+    p[0] = p[1] + [p[3]] if len(p) == 4 else [p[1]]
+
+# acepta "clave" => valor y tambien clave: valor
+def p_par(p):
+    '''par : expresion FLECHA_HASH expresion
+           | ID DOS_PUNTOS expresion'''
+    p[0] = ('par', p[1], p[3])
+# fin Juan
+
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
