@@ -40,4 +40,4 @@ python gui.py
 Primero se hace el análisis léxico. Si no hay errores léxicos, se hace también el sintáctico. Los tokens, errores y el log salen en las pestañas de la derecha. Si da clic en un error, el editor se va a esa línea.
 
 ## Logs
-Cada análisis guarda un log léxico con el nombre `lexico-usuario-dia-mes-año-HHhMM.txt`, por ejemplo `lexico-isabellaim-09-11-2026-19h29.txt`. Si pasa al análisis sintáctico, guarda además un log `sintactico-usuario-dia-mes-año-HHhMM.txt`, por ejemplo `sintactico-isabellaim-14-11-2026-20h33.txt`. Se guardan en `logs/`, dentro de una carpeta con el nombre de cada usuario.
+Cada análisis guarda un log léxico con el nombre `lexico-usuario-añomesdia-HHhMM.txt`, por ejemplo `lexico-isabellaim-20261109-19h29.txt`. Si pasa al análisis sintáctico, guarda además un log `sintactico-usuario-añomesdia-HHhMM.txt`, por ejemplo `sintactico-isabellaim-20261114-20h33.txt`. Se guardan en `logs/`, dentro de una carpeta con el nombre de cada usuario.

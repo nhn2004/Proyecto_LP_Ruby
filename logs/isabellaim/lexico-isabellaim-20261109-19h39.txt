@@ -1,4 +1,4 @@
-Archivo de log: lexico-isabellaim-09-11-2026-19h39.txt
+Archivo de log: lexico-isabellaim-20261109-19h39.txt
 Estudiante: isabellaim
 Fecha de ejecución: 09-11-2026 19:39
 Archivo analizado: algoritmos/prueba3_isabella.rb

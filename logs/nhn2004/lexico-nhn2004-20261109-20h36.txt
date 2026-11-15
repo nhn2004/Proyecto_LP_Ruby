@@ -1,4 +1,4 @@
-Archivo de log: lexico-nhn2004-09-11-2026-20h36.txt
+Archivo de log: lexico-nhn2004-20261109-20h36.txt
 Estudiante: nhn2004
 Fecha de ejecución: 09-11-2026 20:36
 Archivo analizado: algoritmos/prueba2_nahin.rb

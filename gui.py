@@ -26,7 +26,7 @@ def linea_de_error(mensaje):
 
 def armar_log_lexico(usuario, archivo, tokens, errores):
     ahora = datetime.now()
-    nombre = f"lexico-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
+    nombre = f"lexico-{usuario}-{ahora.strftime('%Y%m%d-%Hh%M')}.txt"
     texto = f"Archivo de log: {nombre}\n"
     texto += f"Estudiante: {usuario}\n"
     texto += f"Fecha de ejecución: {ahora.strftime('%d-%m-%Y %H:%M')}\n"
@@ -47,7 +47,7 @@ def armar_log_lexico(usuario, archivo, tokens, errores):
 
 def armar_log_sintactico(usuario, archivo, errores_sint):
     ahora = datetime.now()
-    nombre = f"sintactico-{usuario}-{ahora.strftime('%d-%m-%Y-%Hh%M')}.txt"
+    nombre = f"sintactico-{usuario}-{ahora.strftime('%Y%m%d-%Hh%M')}.txt"
     texto = f"Archivo de log: {nombre}\n"
     texto += f"Estudiante: {usuario}\n"
     texto += f"Fecha de ejecución: {ahora.strftime('%d-%m-%Y %H:%M')}\n"

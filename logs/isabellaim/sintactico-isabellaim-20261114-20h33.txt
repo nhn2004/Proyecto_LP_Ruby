@@ -1,4 +1,4 @@
-Archivo de log: sintactico-isabellaim-14-11-2026-20h33.txt
+Archivo de log: sintactico-isabellaim-20261114-20h33.txt
 Estudiante: isabellaim
 Fecha de ejecución: 14-11-2026 20:33
 Archivo analizado: algoritmos/prueba_sintactico1_isabella.rb

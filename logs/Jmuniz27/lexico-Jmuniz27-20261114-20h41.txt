@@ -1,4 +1,4 @@
-Archivo de log: lexico-Jmuniz27-14-11-2026-20h41.txt
+Archivo de log: lexico-Jmuniz27-20261114-20h41.txt
 Estudiante: Jmuniz27
 Fecha de ejecución: 14-11-2026 20:41
 Archivo analizado: algoritmos/prueba4_juan.rb

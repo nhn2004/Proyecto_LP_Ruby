@@ -1,4 +1,4 @@
-Archivo de log: lexico-nhn2004-14-11-2026-23h21.txt
+Archivo de log: lexico-nhn2004-20261114-23h21.txt
 Estudiante: nhn2004
 Fecha de ejecución: 14-11-2026 23:21
 Archivo analizado: algoritmos\prueba_sintactico3_nahin.rb

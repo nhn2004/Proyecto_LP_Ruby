@@ -1,4 +1,4 @@
-Archivo de log: sintactico-nhn2004-14-11-2026-23h18.txt
+Archivo de log: sintactico-nhn2004-20261114-23h18.txt
 Estudiante: nhn2004
 Fecha de ejecución: 14-11-2026 23:18
 Archivo analizado: algoritmos\prueba_sintactico1_nahin.rb
