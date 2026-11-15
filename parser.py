@@ -1,5 +1,3 @@
-"""Analizador sintactico (parser) con PLY yacc para Ruby - Grupo 2"""
-
 import ply.yacc as yacc
 import lexer
 
@@ -8,7 +6,7 @@ tokens = lexer.tokens
 
 # Nahin, base del parser 
 def p_programa(p):
-    '''programa : lista_sentencias'''
+    "programa : lista_sentencias"
     p[0] = ('programa', p[1])
 
 def p_lista_sentencias(p):
@@ -17,7 +15,7 @@ def p_lista_sentencias(p):
     p[0] = p[1] + [p[2]] if len(p) == 3 else [p[1]]
 
 def p_sentencia_expresion(p):
-    '''sentencia : expresion'''
+    "sentencia : expresion"
     p[0] = p[1]
 
 # niveles de las expresiones de menor a mayor prioridad segun la documentacion de Ruby
@@ -47,11 +45,11 @@ def p_valor_variable(p):
     p[0] = ('variable', p[1])
 
 def p_valor_parentesis(p):
-    '''valor : PAREN_IZQ expresion PAREN_DER'''
+    "valor : PAREN_IZQ expresion PAREN_DER"
     p[0] = p[2]
 
 def p_empty(p):
-    '''empty :'''
+    "empty :"
     p[0] = []
 
 
@@ -80,15 +78,61 @@ def p_expresion_producto(p):
 
 # menos unario ej -5
 def p_expresion_unaria(p):
-    '''expresion_unaria : RESTA expresion_unaria'''
+    "expresion_unaria : RESTA expresion_unaria"
     p[0] = ('unario', p[1], p[2])
 
 # la potencia se agrupa por la derecha ej 2 ** 3 ** 2 es 2 ** 9
 def p_expresion_potencia(p):
-    '''expresion_potencia : expresion_negacion POTENCIA expresion_unaria'''
+    "expresion_potencia : expresion_negacion POTENCIA expresion_unaria"
     p[0] = ('aritmetica', p[2], p[1], p[3])
 # --- FIN JUAN - expresiones aritmeticas ---
 
+
+# INICIO Isa, asignacion e impresion
+def p_sentencia_asignacion(p):
+    "sentencia : asignacion"
+    p[0] = p[1]
+
+#aqui no guardo el = porque siempre es el mismo
+def p_asignacion_simple(p):
+    "asignacion : ID IGUAL expresion"
+    p[0] = ('asignacion', p[1], p[3])
+
+# ej contador += 1 y aqui si guardo el operador para saber cual fue
+def p_asignacion_compuesta(p):
+    '''asignacion : variable_compuesta MAS_IGUAL expresion
+                  | variable_compuesta MENOS_IGUAL expresion
+                  | variable_compuesta POR_IGUAL expresion
+                  | variable_compuesta DIVIDIDO_IGUAL expresion
+                  | variable_compuesta MODULO_IGUAL expresion
+                  | variable_compuesta POTENCIA_IGUAL expresion
+                  | variable_compuesta OR_IGUAL expresion
+                  | variable_compuesta AND_IGUAL expresion'''
+    p[0] = ('asignacion_compuesta', p[2], p[1], p[3])
+
+# Variables que pueden ir antes de por ejemplo += o -=
+def p_variable_compuesta(p):
+    '''variable_compuesta : ID
+                          | VAR_INSTANCIA
+                          | VAR_GLOBAL
+                          | VAR_CLASE'''
+    p[0] = p[1]
+
+def p_sentencia_impresion(p):
+    "sentencia : impresion"
+    p[0] = p[1]
+
+def p_impresion(p):
+    '''impresion : PUTS lista_expresiones
+                 | PRINT lista_expresiones'''
+    p[0] = ('impresion', p[1], p[2])
+
+#la usan luego puts, los arreglos y los argumentos de las funciones
+def p_lista_expresiones(p):
+    '''lista_expresiones : lista_expresiones COMA expresion
+                         | expresion'''
+    p[0] = p[1] + [p[3]] if len(p) == 4 else [p[1]]
+# FIN Isa
 
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
