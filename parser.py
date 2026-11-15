@@ -56,6 +56,40 @@ def p_empty(p):
 
 
 
+# --- INICIO JUAN - expresiones aritmeticas ---
+def p_valor_literal(p):
+    '''valor : ENTERO
+             | FLOTANTE
+             | CADENA
+             | SIMBOLO
+             | TRUE
+             | FALSE
+             | NIL'''
+    p[0] = ('literal', p[1])
+
+def p_expresion_suma(p):
+    '''expresion_suma : expresion_suma SUMA expresion_producto
+                      | expresion_suma RESTA expresion_producto'''
+    p[0] = ('aritmetica', p[2], p[1], p[3])
+
+def p_expresion_producto(p):
+    '''expresion_producto : expresion_producto MULTIPLICACION expresion_unaria
+                          | expresion_producto DIVISION expresion_unaria
+                          | expresion_producto MODULO expresion_unaria'''
+    p[0] = ('aritmetica', p[2], p[1], p[3])
+
+# menos unario ej -5
+def p_expresion_unaria(p):
+    '''expresion_unaria : RESTA expresion_unaria'''
+    p[0] = ('unario', p[1], p[2])
+
+# la potencia se agrupa por la derecha ej 2 ** 3 ** 2 es 2 ** 9
+def p_expresion_potencia(p):
+    '''expresion_potencia : expresion_negacion POTENCIA expresion_unaria'''
+    p[0] = ('aritmetica', p[2], p[1], p[3])
+# --- FIN JUAN - expresiones aritmeticas ---
+
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
