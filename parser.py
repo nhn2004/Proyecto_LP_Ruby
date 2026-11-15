@@ -353,6 +353,17 @@ def p_valor_llamada_funcion(p):
 # Fin Isa
 
 
+# Nahin, lambdas
+def p_valor_lambda(p):
+    '''valor : LAMBDA_FLECHA PAREN_IZQ lista_parametros PAREN_DER LLAVE_IZQ lista_sentencias LLAVE_DER
+             | LAMBDA_FLECHA LLAVE_IZQ lista_sentencias LLAVE_DER'''
+    if len(p) == 8:
+        p[0] = ('lambda', p[3], p[6])
+    else:
+        p[0] = ('lambda', [], p[3])
+# fin Nahin
+
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
