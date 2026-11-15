@@ -260,6 +260,39 @@ def p_valor_acceso_arreglo(p):
 # Fin Isa
 
 
+# Nahin, case when rangos y asignacion especial
+def p_sentencia_case(p):
+    '''sentencia : sentencia_case'''
+    p[0] = p[1]
+
+def p_sentencia_case_cuerpo(p):
+    '''sentencia_case : CASE expresion lista_when else_opcional END'''
+    p[0] = ('case', p[2], p[3], p[4])
+
+def p_lista_when(p):
+    '''lista_when : lista_when bloque_when
+                  | bloque_when'''
+    p[0] = p[1] + [p[2]] if len(p) == 3 else [p[1]]
+
+def p_bloque_when(p):
+    '''bloque_when : WHEN lista_expresiones THEN lista_sentencias
+                   | WHEN lista_expresiones lista_sentencias'''
+    cuerpo = p[4] if len(p) == 5 else p[3]
+    p[0] = ('when', p[2], cuerpo)
+
+def p_expresion_rango(p):
+    '''expresion_rango : expresion_o RANGO_INCLUSIVO expresion_o
+                       | expresion_o RANGO_EXCLUSIVO expresion_o'''
+    p[0] = ('rango', p[2], p[1], p[3])
+
+def p_asignacion_especial(p):
+    '''asignacion : CONSTANTE IGUAL expresion
+                  | VAR_INSTANCIA IGUAL expresion
+                  | VAR_GLOBAL IGUAL expresion'''
+    p[0] = ('asignacion', p[1], p[3])
+# fin Nahin
+
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
