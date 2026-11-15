@@ -88,7 +88,7 @@ ROJO_FONDO = "#ffd9d9"
 class AnalizadorGUI(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Analizador Léxico Ruby - Grupo 2")
+        self.title("Analizador Léxico y Sintáctico Ruby - Grupo 2")
         self.geometry("1100x650")
         self.configure(bg=FONDO)
         self.archivo_actual = None
@@ -125,7 +125,7 @@ class AnalizadorGUI(tk.Tk):
         estilo.map("Treeview.Heading", background=[("active", FONDO_NUMEROS)])
 
     def _encabezado(self):
-        tk.Label(self, text="Analizador Léxico y Semantico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
+        tk.Label(self, text="Analizador Léxico y Sintáctico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
 
         barra = tk.Frame(self, padx=14, pady=10, bg=FONDO)
         barra.pack(fill="x")
