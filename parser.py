@@ -19,7 +19,6 @@ def p_sentencia_expresion(p):
     p[0] = p[1]
 
 # niveles de las expresiones de menor a mayor prioridad segun la documentacion de Ruby
-# por ahora cada nivel solo pasa al siguiente y cada integrante agrega sus operadores en su nivel
 def p_niveles_expresion(p):
     '''expresion : expresion_not
        expresion_not : expresion_rango
@@ -131,7 +130,10 @@ def p_impresion(p):
 def p_lista_expresiones(p):
     '''lista_expresiones : lista_expresiones COMA expresion
                          | expresion'''
-    p[0] = p[1] + [p[3]] if len(p) == 4 else [p[1]]
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    else:
+        p[0] = [p[1]]
 # FIN Isa
 
 # Nahin, condiciones y entrada de datos
@@ -151,20 +153,20 @@ def p_expresion_igualdad(p):
 
 # && tiene mas prioridad que ||
 def p_expresion_y(p):
-    '''expresion_y : expresion_y AND_LOGICO expresion_igualdad'''
+    "expresion_y : expresion_y AND_LOGICO expresion_igualdad"
     p[0] = ('logica', p[2], p[1], p[3])
 
 def p_expresion_o(p):
-    '''expresion_o : expresion_o OR_LOGICO expresion_y'''
+    "expresion_o : expresion_o OR_LOGICO expresion_y"
     p[0] = ('logica', p[2], p[1], p[3])
 
 # ! tiene la prioridad mas alta y not la mas baja
 def p_expresion_negacion(p):
-    '''expresion_negacion : NOT_LOGICO expresion_negacion'''
+    "expresion_negacion : NOT_LOGICO expresion_negacion"
     p[0] = ('negacion', p[1], p[2])
 
 def p_expresion_not(p):
-    '''expresion_not : NOT expresion_not'''
+    "expresion_not : NOT expresion_not"
     p[0] = ('negacion', p[1], p[2])
 
 # and y or son las de menor prioridad
@@ -174,7 +176,7 @@ def p_expresion_and_or(p):
     p[0] = ('logica', p[2], p[1], p[3])
 
 def p_valor_gets(p):
-    '''valor : GETS'''
+    "valor : GETS"
     p[0] = ('entrada', p[1])
 
 # llamadas con punto que se pueden encadenar ej gets.chomp.to_i o Curso.new("LP")
@@ -209,6 +211,53 @@ def p_lista_variables(p):
                        | ID COMA ID'''
     p[0] = p[1] + [p[3]] if isinstance(p[1], list) else [p[1], p[3]]
 # fin Juan
+
+# Inicio Isa, if elsif else y arreglos
+def p_sentencia_if(p):
+    "sentencia : sentencia_if"
+    p[0] = p[1]
+
+#elsif y else pueden no estar pero el end siempre si esta
+def p_sentencia_if_cuerpo(p):
+    "sentencia_if : cabecera_if lista_sentencias lista_elsif else_opcional END"
+    p[0] = ('if', p[1], p[2], p[3], p[4])
+
+#then opcional
+def p_cabecera_if(p):
+    '''cabecera_if : IF expresion THEN
+                   | IF expresion'''
+    p[0] = p[2]
+
+# Puede haber varios elsif
+def p_lista_elsif(p):
+    '''lista_elsif : lista_elsif ELSIF expresion lista_sentencias
+                   | empty'''
+    if len(p) == 5:
+        p[0] = p[1] + [('elsif', p[3], p[4])]
+    else:
+        p[0] = []
+
+def p_else_opcional(p):
+    '''else_opcional : ELSE lista_sentencias
+                     | empty'''
+    if len(p) == 3:
+        p[0] = ('else', p[2])
+    else:
+        p[0] = []
+
+def p_valor_arreglo(p):
+    '''valor : CORCHETE_IZQ lista_expresiones CORCHETE_DER
+             | CORCHETE_IZQ CORCHETE_DER'''
+    if len(p) == 4:
+        p[0] = ('arreglo', p[2])
+    else:
+        p[0] = ('arreglo', [])
+
+# ejemplos numeros[0] y matriz[0][1]
+def p_valor_acceso_arreglo(p):
+    "valor : valor CORCHETE_IZQ expresion CORCHETE_DER"
+    p[0] = ('acceso', p[1], p[3])
+# Fin Isa
 
 
 # Nahin, Manejo de errores sintácticos
