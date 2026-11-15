@@ -1,0 +1,7 @@
+Archivo de log: sintactico-Jmuniz27-14-11-2026-20h41.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 14-11-2026 20:41
+Archivo analizado: algoritmos/prueba4_juan.rb
+
+*********** ERRORES SINTÁCTICOS ***********
+Error sintáctico [línea 48]: token inesperado '=' (tipo: IGUAL)
