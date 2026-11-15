@@ -1,0 +1,96 @@
+Archivo de log: lexico-nhn2004-14-11-2026-23h20.txt
+Estudiante: nhn2004
+Fecha de ejecución: 14-11-2026 23:20
+Archivo analizado: algoritmos\prueba_sintactico2_nahin.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[1] PUTS: puts
+[1] CADENA: "Ingresa tu nombre"
+[2] ID: nombre
+[2] IGUAL: =
+[2] GETS: gets
+[2] PUNTO: .
+[2] ID: chomp
+[3] PUTS: puts
+[3] CADENA: "Ingresa tu edad"
+[4] ID: edad
+[4] IGUAL: =
+[4] GETS: gets
+[4] PUNTO: .
+[4] ID: chomp
+[4] PUNTO: .
+[4] ID: to_i
+[5] PUTS: puts
+[5] CADENA: "Ingresa tu nota"
+[6] ID: nota
+[6] IGUAL: =
+[6] GETS: gets
+[6] PUNTO: .
+[6] ID: chomp
+[6] PUNTO: .
+[6] ID: to_f
+[7] ID: asistencia
+[7] IGUAL: =
+[7] FLOTANTE: 0.85
+[8] ID: requiere_permiso
+[8] IGUAL: =
+[8] FALSE: false
+[9] ID: aprobado
+[9] IGUAL: =
+[9] ID: nota
+[9] MAYOR_IGUAL: >=
+[9] ENTERO: 7
+[9] AND_LOGICO: &&
+[9] ID: asistencia
+[9] MAYOR: >
+[9] FLOTANTE: 0.7
+[10] ID: puede_entrar
+[10] IGUAL: =
+[10] ID: edad
+[10] MAYOR_IGUAL: >=
+[10] ENTERO: 18
+[10] OR_LOGICO: ||
+[10] NOT_LOGICO: !
+[10] ID: requiere_permiso
+[11] ID: mayor
+[11] IGUAL: =
+[11] ID: edad
+[11] MAYOR: >
+[11] ENTERO: 17
+[12] ID: igual
+[12] IGUAL: =
+[12] ID: edad
+[12] IGUAL_IGUAL: ==
+[12] ENTERO: 18
+[13] ID: distinto
+[13] IGUAL: =
+[13] ID: nombre
+[13] DISTINTO: !=
+[13] CADENA: "Ana"
+[14] ID: vacio
+[14] IGUAL: =
+[14] FALSE: false
+[15] ID: activo
+[15] IGUAL: =
+[15] TRUE: true
+[16] ID: valido
+[16] IGUAL: =
+[16] NOT: not
+[16] ID: vacio
+[16] AND: and
+[16] ID: activo
+[17] IF: if
+[17] ID: aprobado
+[17] AND: and
+[17] ID: puede_entrar
+[18] PUTS: puts
+[18] CADENA: "Bienvenido "
+[18] COMA: ,
+[18] ID: nombre
+[19] ELSE: else
+[20] PUTS: puts
+[20] CADENA: "Acceso denegado"
+[21] END: end
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.
