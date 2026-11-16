@@ -60,6 +60,21 @@ def armar_log_sintactico(usuario, archivo, errores_sint):
         texto += "No se encontraron errores sintácticos.\n"
     return nombre, texto
 
+def armar_log_semantico(usuario, archivo, errores_sem):
+    ahora = datetime.now()
+    nombre = f"semantico-{usuario}-{ahora.strftime('%Y%m%d-%Hh%M')}.txt"
+    texto = f"Archivo de log: {nombre}\n"
+    texto += f"Estudiante: {usuario}\n"
+    texto += f"Fecha de ejecución: {ahora.strftime('%d-%m-%Y %H:%M')}\n"
+    texto += f"Archivo analizado: {archivo}\n\n"
+    texto += "*********** ERRORES SEMÁNTICOS ***********\n"
+    if errores_sem:
+        for err in errores_sem:
+            texto += f"{err}\n"
+    else:
+        texto += "No se encontraron errores semánticos.\n"
+    return nombre, texto
+
 
 def guardar_log(usuario, nombre, texto):
     # La ruta crea la subcarpeta con el nombre del usuario de forma dinámica
@@ -88,7 +103,7 @@ ROJO_FONDO = "#ffd9d9"
 class AnalizadorGUI(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Analizador Léxico y Sintáctico Ruby - Grupo 2")
+        self.title("Analizador Léxico, Sintáctico y Semántico Ruby - Grupo 2")
         self.geometry("1100x650")
         self.configure(bg=FONDO)
         self.archivo_actual = None
@@ -125,7 +140,7 @@ class AnalizadorGUI(tk.Tk):
         estilo.map("Treeview.Heading", background=[("active", FONDO_NUMEROS)])
 
     def _encabezado(self):
-        tk.Label(self, text="Analizador Léxico y Sintáctico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
+        tk.Label(self, text="Analizador Léxico, Sintáctico y Semántico Ruby - Grupo 2", bg=FONDO, anchor="center", font=("Helvetica", 16, "bold")).pack(fill="x", pady=(14, 0))
 
         barra = tk.Frame(self, padx=14, pady=10, bg=FONDO)
         barra.pack(fill="x")
@@ -286,9 +301,21 @@ class AnalizadorGUI(tk.Tk):
         nombre_sint, texto_sint = armar_log_sintactico(usuario_actual, archivo, errores_sint)
         guardar_log(usuario_actual, nombre_sint, texto_sint)
 
-        # Mostramos el log sintáctico en la pestaña de Log de la GUI
-        self._mostrar_log(texto_sint)
-        self.estado.set(f"Análisis exitoso. Log sintáctico guardado: logs/{usuario_actual}/{nombre_sint}")
+        # Si hay errores sintácticos se muestra el log sintáctico y no se sigue
+        if errores_sint:
+            self._mostrar_log(texto_sint)
+            self.estado.set(f"Detenido por errores sintácticos. Log guardado: logs/{usuario_actual}/{nombre_sint}")
+            return
+
+        # PASO 3: Análisis semántico, sus errores se guardan mientras corre el parser
+        errores_sem = list(parser.errores_semanticos)
+        self._llenar_resultados(tokens, errores_sem)
+
+        nombre_sem, texto_sem = armar_log_semantico(usuario_actual, archivo, errores_sem)
+        guardar_log(usuario_actual, nombre_sem, texto_sem)
+
+        self._mostrar_log(texto_sem)
+        self.estado.set(f"Análisis completo. Log semántico guardado: logs/{usuario_actual}/{nombre_sem}")
 
 
 
