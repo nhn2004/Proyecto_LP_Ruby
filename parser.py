@@ -8,6 +8,9 @@ tokens = lexer.tokens
 # Nahin, base del parser 
 def p_programa(p):
     "programa : lista_sentencias"
+    # las reglas de break next y llamadas se revisan al final con todo el programa
+    revisar_programa(p[1], False)
+    revisar_llamadas()
     p[0] = ('programa', p[1])
 
 def p_lista_sentencias(p):
@@ -378,6 +381,7 @@ def p_valor_llamada_funcion(p):
         p[0] = ('llamada', p[1], p[3])
     else:
         p[0] = ('llamada', p[1], [])
+    llamadas.append((p[1], len(p[0][2]), p.lineno(1)))
 # Fin Isa
 
 
@@ -594,6 +598,48 @@ def p_asignacion_case(p):
     p[0] = ('asignacion', p[1], p[3])
 # fin Nahin
 
+# Nahin, reglas semanticas de break next y llamadas a funciones
+# nombre de la funcion con cuantos parametros obligatorios y en total tiene
+funciones = {}
+# llamadas encontradas con el nombre, cuantos argumentos tienen y la linea
+llamadas = []
+
+# recorre el arbol al final porque el cuerpo del while se reduce antes que el while
+def revisar_programa(nodo, dentro_while):
+    if isinstance(nodo, list):
+        for hijo in nodo:
+            revisar_programa(hijo, dentro_while)
+        return
+    if not isinstance(nodo, tuple) or not nodo:
+        return
+    # regla 5 break y next solo pueden ir dentro de un while
+    if nodo[0] in ('break', 'next'):
+        if not dentro_while:
+            error_semantico("Estructuras de control", nodo[1], f"'{nodo[0]}' solo puede usarse dentro de un bucle while.")
+        return
+    if nodo[0] == 'while':
+        dentro_while = True
+    elif nodo[0] in ('funcion', 'lambda', 'clase'):
+        dentro_while = False
+    if nodo[0] == 'funcion':
+        parametros = nodo[2]
+        obligatorios = len([par for par in parametros if par[0] == 'parametro'])
+        funciones[nodo[1]] = (obligatorios, len(parametros))
+    for hijo in nodo[1:]:
+        revisar_programa(hijo, dentro_while)
+
+# regla 6 la funcion tiene que estar definida y recibir los argumentos que pide
+def revisar_llamadas():
+    for nombre, cantidad, linea in llamadas:
+        if nombre not in funciones:
+            error_semantico("Identificadores", linea, f"la función '{nombre}' no ha sido definida.")
+            continue
+        obligatorios, total = funciones[nombre]
+        if cantidad < obligatorios or cantidad > total:
+            esperados = obligatorios if obligatorios == total else f"entre {obligatorios} y {total}"
+            error_semantico("Identificadores", linea, f"'{nombre}' espera {esperados} argumentos y recibió {cantidad}.")
+# fin Nahin
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
@@ -614,6 +660,8 @@ def parsear(codigo):
     del ambitos[1:]
     ambitos[0].clear()
     constantes.clear()
+    funciones.clear()
+    llamadas.clear()
     nombres_funciones.clear()
     lexer.lexer.lineno = 1
     # tracking para que p.lineno tambien de la linea de las reglas y no solo de los tokens
