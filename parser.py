@@ -581,6 +581,19 @@ def revisar_constante(nodo, linea):
             error_semantico("Asignación de tipo", linea, f"la constante '{nodo[1]}' ya fue definida en la línea {anterior['linea']} y no puede reasignarse.")
 #Fin Isa
 
+# Nahin, break next y case en asignacion
+# guardo la linea para revisar despues si esta dentro de un while
+def p_sentencia_break_next(p):
+    '''sentencia : BREAK
+                 | NEXT'''
+    p[0] = (p[1], p.lineno(1))
+
+# ej tipo = case edad when ... end
+def p_asignacion_case(p):
+    "asignacion : ID IGUAL sentencia_case"
+    p[0] = ('asignacion', p[1], p[3])
+# fin Nahin
+
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
 
