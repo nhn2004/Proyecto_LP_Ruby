@@ -309,6 +309,13 @@ def p_par(p):
     '''par : expresion FLECHA_HASH expresion
            | ID DOS_PUNTOS expresion'''
     p[0] = ('par', p[1], p[3])
+
+# asignar en una posicion de un hash o arreglo ej config[:minimo] = 5 o notas[0] += 1
+def p_asignacion_indice(p):
+    '''asignacion : valor CORCHETE_IZQ expresion CORCHETE_DER IGUAL expresion
+                  | valor CORCHETE_IZQ expresion CORCHETE_DER MAS_IGUAL expresion
+                  | valor CORCHETE_IZQ expresion CORCHETE_DER MENOS_IGUAL expresion'''
+    p[0] = ('asignacion_indice', p[5], p[1], p[3], p[6])
 # fin Juan
 
 #Inicio Isa funciones con return
