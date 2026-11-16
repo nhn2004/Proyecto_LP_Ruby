@@ -1,0 +1,7 @@
+Archivo de log: sintactico-Jmuniz27-20261115-22h00.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 15-11-2026 22:00
+Archivo analizado: algoritmos\prueba_semantico1_juan.rb
+
+*********** ERRORES SINTÁCTICOS ***********
+No se encontraron errores sintácticos.

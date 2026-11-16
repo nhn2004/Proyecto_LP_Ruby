@@ -1,0 +1,9 @@
+Archivo de log: semantico-Jmuniz27-20261115-22h01.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 15-11-2026 22:01
+Archivo analizado: algoritmos\prueba_semantico2_juan.rb
+
+*********** ERRORES SEMÁNTICOS ***********
+Error semántico [Conversión, línea 17]: 'edad' es String; use edad.to_i o edad.to_f antes de operar.
+Error semántico [Conversión, línea 18]: 'edad' es String; use edad.to_i o edad.to_f antes de operar.
+Error semántico [Conversión, línea 19]: 'meses' es Integer; use meses.to_s antes de concatenar.

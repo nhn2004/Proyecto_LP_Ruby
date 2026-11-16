@@ -1,0 +1,10 @@
+Archivo de log: semantico-Jmuniz27-20261115-22h00.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 15-11-2026 22:00
+Archivo analizado: algoritmos\prueba_semantico1_juan.rb
+
+*********** ERRORES SEMÁNTICOS ***********
+Error semántico [Operaciones permitidas, línea 20]: no se puede sumar String con Integer.
+Error semántico [Operaciones permitidas, línea 21]: no se puede multiplicar Integer con String.
+Error semántico [Operaciones permitidas, línea 22]: no se puede sumar Boolean con Float.
+Error semántico [Operaciones permitidas, línea 23]: no se puede aplicar el menos unario a String.

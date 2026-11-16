@@ -1,0 +1,78 @@
+Archivo de log: lexico-Jmuniz27-20261115-22h00.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 15-11-2026 22:00
+Archivo analizado: algoritmos\prueba_semantico1_juan.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[5] CONSTANTE: IVA
+[5] IGUAL: =
+[5] FLOTANTE: 0.15
+[6] ID: productos
+[6] IGUAL: =
+[6] LLAVE_IZQ: {
+[6] CADENA: "cuaderno"
+[6] FLECHA_HASH: =>
+[6] FLOTANTE: 2.5
+[6] COMA: ,
+[6] CADENA: "lapiz"
+[6] FLECHA_HASH: =>
+[6] FLOTANTE: 0.75
+[6] LLAVE_DER: }
+[7] ID: cantidad
+[7] IGUAL: =
+[7] ENTERO: 4
+[8] ID: precio
+[8] IGUAL: =
+[8] FLOTANTE: 2.5
+[10] ID: subtotal
+[10] IGUAL: =
+[10] ID: cantidad
+[10] MULTIPLICACION: *
+[10] ID: precio
+[11] ID: impuesto
+[11] IGUAL: =
+[11] ID: subtotal
+[11] MULTIPLICACION: *
+[11] CONSTANTE: IVA
+[12] ID: total
+[12] IGUAL: =
+[12] ID: subtotal
+[12] SUMA: +
+[12] ID: impuesto
+[13] ID: separador
+[13] IGUAL: =
+[13] CADENA: "-"
+[13] MULTIPLICACION: *
+[13] ENTERO: 20
+[15] PUTS: puts
+[15] ID: separador
+[16] PUTS: puts
+[16] CADENA: "Factura de la tienda"
+[17] PRINT: print
+[17] CADENA: "Productos: "
+[17] COMA: ,
+[17] ID: productos
+[20] ID: etiqueta
+[20] IGUAL: =
+[20] CADENA: "Total: "
+[20] SUMA: +
+[20] ENTERO: 20
+[21] ID: descuento
+[21] IGUAL: =
+[21] ENTERO: 3
+[21] MULTIPLICACION: *
+[21] CADENA: "%"
+[22] ID: envio
+[22] IGUAL: =
+[22] TRUE: true
+[22] SUMA: +
+[22] FLOTANTE: 1.5
+[23] ID: saldo
+[23] IGUAL: =
+[23] RESTA: -
+[23] CADENA: "pendiente"
+[25] PUTS: puts
+[25] ID: separador
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.

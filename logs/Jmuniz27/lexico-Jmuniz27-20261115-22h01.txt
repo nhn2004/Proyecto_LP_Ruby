@@ -1,0 +1,66 @@
+Archivo de log: lexico-Jmuniz27-20261115-22h01.txt
+Estudiante: Jmuniz27
+Fecha de ejecución: 15-11-2026 22:01
+Archivo analizado: algoritmos\prueba_semantico2_juan.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[5] PRINT: print
+[5] CADENA: "Ingrese su nombre: "
+[6] ID: nombre
+[6] IGUAL: =
+[6] GETS: gets
+[6] PUNTO: .
+[6] ID: chomp
+[7] PRINT: print
+[7] CADENA: "Ingrese su edad: "
+[8] ID: edad
+[8] IGUAL: =
+[8] GETS: gets
+[8] PUNTO: .
+[8] ID: chomp
+[9] PRINT: print
+[9] CADENA: "Ingrese su ahorro mensual: "
+[10] ID: ahorro
+[10] IGUAL: =
+[10] GETS: gets
+[10] PUNTO: .
+[10] ID: chomp
+[10] PUNTO: .
+[10] ID: to_f
+[12] ID: meses
+[12] IGUAL: =
+[12] ENTERO: 12
+[13] ID: ahorro_anual
+[13] IGUAL: =
+[13] ID: ahorro
+[13] MULTIPLICACION: *
+[13] ID: meses
+[14] ID: saludo
+[14] IGUAL: =
+[14] CADENA: "Hola "
+[14] SUMA: +
+[14] ID: nombre
+[17] ID: siguiente_edad
+[17] IGUAL: =
+[17] ID: edad
+[17] SUMA: +
+[17] ENTERO: 1
+[18] ID: mitad
+[18] IGUAL: =
+[18] ID: edad
+[18] DIVISION: /
+[18] ENTERO: 2
+[19] ID: mensaje
+[19] IGUAL: =
+[19] CADENA: "Meses ahorrando: "
+[19] SUMA: +
+[19] ID: meses
+[21] PUTS: puts
+[21] ID: saludo
+[22] PUTS: puts
+[22] CADENA: "Ahorro anual: "
+[22] COMA: ,
+[22] ID: ahorro_anual
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.
