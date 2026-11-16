@@ -69,22 +69,26 @@ def p_valor_literal(p):
 def p_expresion_suma(p):
     '''expresion_suma : expresion_suma SUMA expresion_producto
                       | expresion_suma RESTA expresion_producto'''
+    revisar_operacion(p[2], p[1], p[3], p.lineno(2))
     p[0] = ('aritmetica', p[2], p[1], p[3])
 
 def p_expresion_producto(p):
     '''expresion_producto : expresion_producto MULTIPLICACION expresion_unaria
                           | expresion_producto DIVISION expresion_unaria
                           | expresion_producto MODULO expresion_unaria'''
+    revisar_operacion(p[2], p[1], p[3], p.lineno(2))
     p[0] = ('aritmetica', p[2], p[1], p[3])
 
 # menos unario ej -5
 def p_expresion_unaria(p):
     "expresion_unaria : RESTA expresion_unaria"
+    revisar_unario(p[2], p.lineno(1))
     p[0] = ('unario', p[1], p[2])
 
 # la potencia se agrupa por la derecha ej 2 ** 3 ** 2 es 2 ** 9
 def p_expresion_potencia(p):
     "expresion_potencia : expresion_negacion POTENCIA expresion_unaria"
+    revisar_operacion(p[2], p[1], p[3], p.lineno(2))
     p[0] = ('aritmetica', p[2], p[1], p[3])
 # fin Juan
 
@@ -464,6 +468,8 @@ def tipo_de(nodo):
     if clase == 'variable':
         simbolo = buscar_variable(nodo[1])
         return simbolo['tipo'] if simbolo else None
+    if clase == 'aritmetica':
+        return tipo_resultado(nodo[1], tipo_de(nodo[2]), tipo_de(nodo[3]))
     if clase == 'unario':
         tipo = tipo_de(nodo[2])
         return tipo if tipo in NUMERICOS else None
@@ -493,6 +499,59 @@ def tipo_de(nodo):
 def numero_de_linea(mensaje):
     encontrado = re.search(r"línea (\d+)", mensaje)
     return int(encontrado.group(1)) if encontrado else 0
+# fin Juan
+
+
+# Juan, reglas semanticas de operaciones y conversion
+VERBOS = {
+    '+': 'sumar',
+    '-': 'restar',
+    '*': 'multiplicar',
+    '/': 'dividir',
+    '%': 'sacar el módulo de',
+    '**': 'elevar',
+}
+
+# tipo que da una operacion, None si la operacion no se permite
+def tipo_resultado(operador, tipo_izq, tipo_der):
+    if tipo_izq in NUMERICOS and tipo_der in NUMERICOS:
+        # regla 4 coercion entre Integer y Float, si uno es Float el resultado es Float
+        return 'Float' if 'Float' in (tipo_izq, tipo_der) else 'Integer'
+    # un String o un Array solo se suma con otro igual ej "Hola " + nombre
+    if operador == '+' and tipo_izq == tipo_der and tipo_izq in ('String', 'Array'):
+        return tipo_izq
+    # y solo se multiplica por un Integer ej "-" * 10
+    if operador == '*' and tipo_izq in ('String', 'Array') and tipo_der == 'Integer':
+        return tipo_izq
+    return None
+
+def revisar_operacion(operador, izq, der, linea):
+    tipo_izq = tipo_de(izq)
+    tipo_der = tipo_de(der)
+    # si no se sabe el tipo de alguno no se reporta nada
+    if tipo_izq is None or tipo_der is None:
+        return
+    if tipo_resultado(operador, tipo_izq, tipo_der):
+        return
+    # regla 4 un String con un numero necesita conversion explicita ej edad.to_i
+    if 'String' in (tipo_izq, tipo_der) and (tipo_izq in NUMERICOS or tipo_der in NUMERICOS):
+        cadena, numero = (izq, der) if tipo_izq == 'String' else (der, izq)
+        if cadena[0] == 'variable':
+            nombre = cadena[1]
+            error_semantico("Conversión", linea, f"'{nombre}' es String; use {nombre}.to_i o {nombre}.to_f antes de operar.")
+            return
+        if numero[0] == 'variable' and operador == '+':
+            nombre = numero[1]
+            error_semantico("Conversión", linea, f"'{nombre}' es {tipo_de(numero)}; use {nombre}.to_s antes de concatenar.")
+            return
+    # regla 3 las operaciones aritmeticas solo se permiten entre numeros
+    error_semantico("Operaciones permitidas", linea, f"no se puede {VERBOS[operador]} {tipo_izq} con {tipo_der}.")
+
+# el menos unario solo se usa con numeros ej -"hola" no se permite
+def revisar_unario(nodo, linea):
+    tipo = tipo_de(nodo)
+    if tipo is not None and tipo not in NUMERICOS:
+        error_semantico("Operaciones permitidas", linea, f"no se puede aplicar el menos unario a {tipo}.")
 # fin Juan
 
 
