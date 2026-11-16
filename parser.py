@@ -42,6 +42,8 @@ def p_valor_variable(p):
              | VAR_GLOBAL
              | VAR_CLASE
              | SELF'''
+    if p.slice[1].type == 'ID':
+        revisar_variable_asignada(p[1], p.lineno(1))
     p[0] = ('variable', p[1])
 
 def p_valor_parentesis(p):
@@ -96,6 +98,7 @@ def p_expresion_potencia(p):
 # INICIO Isa, asignacion e impresion
 def p_sentencia_asignacion(p):
     "sentencia : asignacion"
+    revisar_constante(p[1], p.lineno(1))
     registrar_asignacion(p[1], p.lineno(1))
     p[0] = p[1]
 
@@ -114,6 +117,9 @@ def p_asignacion_compuesta(p):
                   | variable_compuesta POTENCIA_IGUAL expresion
                   | variable_compuesta OR_IGUAL expresion
                   | variable_compuesta AND_IGUAL expresion'''
+    #por ejemplo contador += 1 usa contador asi que tuvo que asignarse antes. 
+    if (p[1][0].islower() or p[1][0] == '_') and p[2] not in ('||=', '&&='):#con ||= y &&= no importa revisar asignación porque esos crean la variable si no existe
+        revisar_variable_asignada(p[1], p.lineno(1))
     p[0] = ('asignacion_compuesta', p[2], p[1], p[3])
 
 # Variables que pueden ir antes de por ejemplo += o -=
@@ -332,12 +338,19 @@ def p_sentencia_funcion(p):
 
 #en nuestra implementacion la funcion siempre lleva parentesis aunque no tenga parametros
 def p_definicion_funcion(p):
-    '''definicion_funcion : DEF ID PAREN_IZQ lista_parametros PAREN_DER lista_sentencias END
-                          | DEF ID PAREN_IZQ PAREN_DER lista_sentencias END'''
-    if len(p) == 8:
-        p[0] = ('funcion', p[2], p[4], p[6])
+    '''definicion_funcion : inicio_funcion PAREN_IZQ lista_parametros PAREN_DER lista_sentencias END
+                          | inicio_funcion PAREN_IZQ PAREN_DER lista_sentencias END'''
+    ambitos.pop() #hago pop porque al terminar la funcion se cierra su alcance
+    if len(p) == 7:
+        p[0] = ('funcion', p[1], p[3], p[5])
     else:
-        p[0] = ('funcion', p[2], [], p[5])
+        p[0] = ('funcion', p[1], [], p[4])
+
+def p_inicio_funcion(p):
+    "inicio_funcion : DEF ID"
+    ambitos.append({})#el def crea alcance nuevo antes de leer params
+    nombres_funciones.add(p[2])
+    p[0] = p[2]
 
 def p_lista_parametros(p):
     '''lista_parametros : lista_parametros COMA parametro
@@ -554,6 +567,19 @@ def revisar_unario(nodo, linea):
         error_semantico("Operaciones permitidas", linea, f"no se puede aplicar el menos unario a {tipo}.")
 # fin Juan
 
+#Parte de Isabella reglas semanticas de variables y constantes
+nombres_funciones = set()
+def revisar_variable_asignada(nombre, linea): #var solo se puede usar si se asigno antes y en el mismo alcance
+    if buscar_variable(nombre) is None and nombre not in nombres_funciones:
+        error_semantico("Identificadores", linea, f"la variable '{nombre}' se usa antes de ser asignada.")
+
+#constante no se puede reasignar (lo vamos a manejar como error)
+def revisar_constante(nodo, linea):
+    if nodo[0] == 'asignacion' and nodo[1][0].isupper():
+        anterior = constantes.get(nodo[1])
+        if anterior:
+            error_semantico("Asignación de tipo", linea, f"la constante '{nodo[1]}' ya fue definida en la línea {anterior['linea']} y no puede reasignarse.")
+#Fin Isa
 
 # Nahin, Manejo de errores sintácticos
 errores_sintacticos = []
@@ -575,6 +601,7 @@ def parsear(codigo):
     del ambitos[1:]
     ambitos[0].clear()
     constantes.clear()
+    nombres_funciones.clear()
     lexer.lexer.lineno = 1
     # tracking para que p.lineno tambien de la linea de las reglas y no solo de los tokens
     resultado = parser.parse(codigo, lexer=lexer.lexer, tracking=True)
