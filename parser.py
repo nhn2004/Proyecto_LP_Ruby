@@ -1,3 +1,4 @@
+import re
 import ply.yacc as yacc
 import lexer
 
@@ -62,7 +63,8 @@ def p_valor_literal(p):
              | TRUE
              | FALSE
              | NIL'''
-    p[0] = ('literal', p[1])
+    # guardo tambien el tipo de token para saber el tipo del valor en el semantico
+    p[0] = ('literal', p[1], p.slice[1].type)
 
 def p_expresion_suma(p):
     '''expresion_suma : expresion_suma SUMA expresion_producto
@@ -90,6 +92,7 @@ def p_expresion_potencia(p):
 # INICIO Isa, asignacion e impresion
 def p_sentencia_asignacion(p):
     "sentencia : asignacion"
+    registrar_asignacion(p[1], p.lineno(1))
     p[0] = p[1]
 
 #aqui no guardo el = porque siempre es el mismo
@@ -342,6 +345,7 @@ def p_lista_parametros(p):
 
 def p_parametro(p):
     "parametro : ID"
+    registrar_variable(p[1], None, p.lineno(1))
     p[0] = ('parametro', p[1])
 
 #un ejemplo puede ser return base * altura
@@ -390,7 +394,105 @@ def p_asignacion_variable_clase(p):
 # parametro con valor por defecto ej saludo = "Hola"
 def p_parametro_opcional(p):
     "parametro : ID IGUAL expresion"
+    registrar_variable(p[1], tipo_de(p[3]), p.lineno(1))
     p[0] = ('parametro_opcional', p[1], p[3])
+# fin Juan
+
+
+# Juan, base del analizador semantico
+# las reglas semanticas se revisan mientras yacc va reduciendo las reglas del parser
+errores_semanticos = []
+
+# tabla de simbolos, ambitos es una pila de alcances y el primero es el del programa
+# cada variable guarda su tipo y la linea donde se asigno
+ambitos = [{}]
+# las constantes van aparte porque se pueden usar desde cualquier alcance
+constantes = {}
+
+NUMERICOS = ('Integer', 'Float')
+
+TIPOS_LITERAL = {
+    'ENTERO': 'Integer',
+    'FLOTANTE': 'Float',
+    'CADENA': 'String',
+    'SIMBOLO': 'Symbol',
+    'TRUE': 'Boolean',
+    'FALSE': 'Boolean',
+    'NIL': 'NilClass',
+}
+
+# metodos que convierten a otro tipo ej edad.to_i
+CONVERSIONES = {'to_i': 'Integer', 'to_f': 'Float', 'to_s': 'String'}
+
+# el mensaje lleva la categoria de la regla ej Error semántico [Conversión, línea 4]: ...
+def error_semantico(categoria, linea, mensaje):
+    errores_semanticos.append(f"Error semántico [{categoria}, línea {linea}]: {mensaje}")
+
+def registrar_variable(nombre, tipo, linea):
+    if nombre[0].isupper():
+        constantes[nombre] = {'tipo': tipo, 'linea': linea}
+    else:
+        ambitos[-1][nombre] = {'tipo': tipo, 'linea': linea}
+
+# solo se busca en el alcance actual porque en ruby un def no ve las variables de afuera
+def buscar_variable(nombre):
+    if nombre[0].isupper():
+        return constantes.get(nombre)
+    return ambitos[-1].get(nombre)
+
+def registrar_asignacion(nodo, linea):
+    if nodo[0] == 'asignacion':
+        registrar_variable(nodo[1], tipo_de(nodo[2]), linea)
+    elif nodo[0] == 'asignacion_multiple':
+        # primero saco todos los tipos para que x, y = y, x funcione bien
+        tipos = [tipo_de(valor) for valor in nodo[2]]
+        for i, nombre in enumerate(nodo[1]):
+            registrar_variable(nombre, tipos[i] if i < len(tipos) else None, linea)
+    elif nodo[0] == 'asignacion_compuesta':
+        # ej total += 1.5 es como total = total + 1.5
+        operador = nodo[1][:-1]
+        tipo = tipo_de(('aritmetica', operador, ('variable', nodo[2]), nodo[3]))
+        registrar_variable(nodo[2], tipo, linea)
+
+# devuelve el tipo de un nodo y None si no se puede saber, en ese caso no se reporta error
+def tipo_de(nodo):
+    if not isinstance(nodo, tuple):
+        return None
+    clase = nodo[0]
+    if clase == 'literal':
+        return TIPOS_LITERAL.get(nodo[2])
+    if clase == 'variable':
+        simbolo = buscar_variable(nodo[1])
+        return simbolo['tipo'] if simbolo else None
+    if clase == 'unario':
+        tipo = tipo_de(nodo[2])
+        return tipo if tipo in NUMERICOS else None
+    if clase in ('comparacion', 'negacion'):
+        return 'Boolean'
+    if clase == 'entrada':
+        return 'String'
+    if clase == 'arreglo':
+        return 'Array'
+    if clase == 'hash':
+        return 'Hash'
+    if clase == 'rango':
+        return 'Range'
+    if clase == 'lambda':
+        return 'Proc'
+    if clase == 'llamada_metodo':
+        metodo = nodo[2]
+        if metodo in CONVERSIONES:
+            return CONVERSIONES[metodo]
+        if metodo in ('length', 'size', 'count'):
+            return 'Integer'
+        # ej gets.chomp sigue siendo String
+        if metodo in ('chomp', 'strip', 'upcase', 'downcase', 'capitalize'):
+            return 'String' if tipo_de(nodo[1]) == 'String' else None
+    return None
+
+def numero_de_linea(mensaje):
+    encontrado = re.search(r"línea (\d+)", mensaje)
+    return int(encontrado.group(1)) if encontrado else 0
 # fin Juan
 
 
@@ -409,6 +511,14 @@ parser = yacc.yacc(debug=False, write_tables=False)
 
 def parsear(codigo):
     errores_sintacticos.clear()
+    # se limpia la tabla de simbolos para que no queden datos del analisis anterior
+    errores_semanticos.clear()
+    del ambitos[1:]
+    ambitos[0].clear()
+    constantes.clear()
     lexer.lexer.lineno = 1
-    resultado = parser.parse(codigo, lexer=lexer.lexer)
+    # tracking para que p.lineno tambien de la linea de las reglas y no solo de los tokens
+    resultado = parser.parse(codigo, lexer=lexer.lexer, tracking=True)
+    # algunas reglas se revisan al final, por eso se ordenan por linea
+    errores_semanticos.sort(key=numero_de_linea)
     return resultado, errores_sintacticos
