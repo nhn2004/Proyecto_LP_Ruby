@@ -1,8 +1,4 @@
-=begin
-Cuenta cuantas notas son mayores al promedio
-no tiene errores semanticos
-=end
-
+#Cuenta cuantas notas son mayores al promedio
 MINIMO = 7
 notas = [8, 6.5, 9, 7]
 
@@ -15,7 +11,6 @@ def promedio(lista)
   end
   return suma / lista.length
 end
-
 prom = promedio(notas)
 mayores = 0
 i = 0
@@ -25,7 +20,6 @@ while i < notas.length
   end
   i += 1
 end
-
 if prom >= MINIMO
   puts "Aprobado con ", prom
 else

@@ -1,0 +1,7 @@
+Archivo de log: semantico-isabellaim-20261116-19h27.txt
+Estudiante: isabellaim
+Fecha de ejecución: 16-11-2026 19:27
+Archivo analizado: algoritmos/prueba_semantico2_isabella.rb
+
+*********** ERRORES SEMÁNTICOS ***********
+Error semántico [Asignación de tipo, línea 13]: la constante 'TASA' ya fue definida en la línea 5 y no puede reasignarse.
