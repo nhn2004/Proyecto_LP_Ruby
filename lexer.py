@@ -135,7 +135,13 @@ def t_CADENA(t):
     r'"(\\.|[^"\\])*"|\'(\\.|[^\'\\])*\''
     t.lexer.lineno += t.value.count('\n')
     return t
-
+# Nahin, cadena sin cerrar
+def t_CADENA_SIN_CERRAR(t):
+    r'"[^"\n]*|\'[^ \'\n]*'
+    errores_lexicos.append(
+        f"Error léxico [línea {t.lexer.lineno}]: cadena sin cerrar, falta la comilla final"
+    )
+# fin Nahin
 def t_SIMBOLO(t):
     # dos puntos seguido del nombre ej :nombre, no choca con :: porque despues del : tiene que venir letra
     r':[a-zA-Z_]\w*[?!]?'
