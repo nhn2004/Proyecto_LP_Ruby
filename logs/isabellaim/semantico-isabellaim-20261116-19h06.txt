@@ -1,8 +1,0 @@
-Archivo de log: semantico-isabellaim-20261116-19h06.txt
-Estudiante: isabellaim
-Fecha de ejecución: 16-11-2026 19:06
-Archivo analizado: algoritmos/prueba_semantico1_isabella.rb
-
-*********** ERRORES SEMÁNTICOS ***********
-Error semántico [Identificadores, línea 11]: la variable 'suma' se usa antes de ser asignada.
-Error semántico [Identificadores, línea 18]: la variable 'descuento' se usa antes de ser asignada.
