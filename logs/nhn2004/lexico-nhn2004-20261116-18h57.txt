@@ -1,0 +1,28 @@
+Archivo de log: lexico-nhn2004-20261116-18h57.txt
+Estudiante: nhn2004
+Fecha de ejecución: 16-11-2026 18:57
+Archivo analizado: algoritmos\prueba_semantico1_nahin.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[1] ID: n
+[1] IGUAL: =
+[1] ENTERO: 0
+[2] NEXT: next
+[3] WHILE: while
+[3] ID: n
+[3] MENOR: <
+[3] ENTERO: 5
+[4] ID: n
+[4] MAS_IGUAL: +=
+[4] ENTERO: 1
+[5] IF: if
+[5] ID: n
+[5] IGUAL_IGUAL: ==
+[5] ENTERO: 3
+[6] BREAK: break
+[7] END: end
+[8] END: end
+[9] BREAK: break
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.

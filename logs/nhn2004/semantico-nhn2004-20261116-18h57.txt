@@ -1,0 +1,8 @@
+Archivo de log: semantico-nhn2004-20261116-18h57.txt
+Estudiante: nhn2004
+Fecha de ejecución: 16-11-2026 18:57
+Archivo analizado: algoritmos\prueba_semantico1_nahin.rb
+
+*********** ERRORES SEMÁNTICOS ***********
+Error semántico [Estructuras de control, línea 2]: 'next' solo puede usarse dentro de un bucle while.
+Error semántico [Estructuras de control, línea 9]: 'break' solo puede usarse dentro de un bucle while.
