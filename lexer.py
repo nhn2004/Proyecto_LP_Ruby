@@ -112,6 +112,13 @@ tokens_juan = (
     'MODULO_IGUAL', 'POTENCIA_IGUAL', 'OR_IGUAL', 'AND_IGUAL'
 )
 
+# Juan, numero mal formado
+def t_NUMERO_INVALIDO(t):
+    # dos o mas puntos decimales seguidos ej 3.14.15, va antes de FLOTANTE para que no lo corte
+    r'\d[\d_]*(\.\d[\d_]*){2,}'
+    errores_lexicos.append(f"Error léxico [línea {t.lexer.lineno}]: número mal formado '{t.value}'")
+# fin Juan
+
 def t_FLOTANTE(t):
     # numeros con punto decimal y exponente opcional ej 3.14 o 1.2e3
     # va antes de ENTERO para que no lo corte en el punto
