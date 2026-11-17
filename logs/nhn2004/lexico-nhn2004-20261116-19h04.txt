@@ -1,0 +1,41 @@
+Archivo de log: lexico-nhn2004-20261116-19h04.txt
+Estudiante: nhn2004
+Fecha de ejecución: 16-11-2026 19:04
+Archivo analizado: algoritmos\prueba_semantico3_nahin.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[1] DEF: def
+[1] ID: doble
+[1] PAREN_IZQ: (
+[1] ID: x
+[1] PAREN_DER: )
+[2] RETURN: return
+[2] ID: x
+[2] MULTIPLICACION: *
+[2] ENTERO: 2
+[3] END: end
+[4] ID: i
+[4] IGUAL: =
+[4] ENTERO: 0
+[5] WHILE: while
+[5] ID: i
+[5] MENOR: <
+[5] ENTERO: 10
+[6] ID: i
+[6] MAS_IGUAL: +=
+[6] ENTERO: 1
+[7] IF: if
+[7] ID: doble
+[7] PAREN_IZQ: (
+[7] ID: i
+[7] PAREN_DER: )
+[7] MAYOR: >
+[7] ENTERO: 8
+[8] BREAK: break
+[9] END: end
+[10] END: end
+[11] PUTS: puts
+[11] ID: i
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.

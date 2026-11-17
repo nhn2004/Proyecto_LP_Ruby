@@ -1,0 +1,7 @@
+Archivo de log: sintactico-nhn2004-20261116-19h04.txt
+Estudiante: nhn2004
+Fecha de ejecución: 16-11-2026 19:04
+Archivo analizado: algoritmos\prueba_semantico3_nahin.rb
+
+*********** ERRORES SINTÁCTICOS ***********
+No se encontraron errores sintácticos.
