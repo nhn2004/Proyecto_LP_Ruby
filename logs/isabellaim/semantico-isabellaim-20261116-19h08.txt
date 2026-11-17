@@ -1,0 +1,7 @@
+Archivo de log: semantico-isabellaim-20261116-19h08.txt
+Estudiante: isabellaim
+Fecha de ejecución: 16-11-2026 19:08
+Archivo analizado: algoritmos/prueba_semantico3_isabella.rb
+
+*********** ERRORES SEMÁNTICOS ***********
+No se encontraron errores semánticos.
