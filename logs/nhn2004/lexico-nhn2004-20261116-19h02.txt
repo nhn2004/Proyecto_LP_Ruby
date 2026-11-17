@@ -1,0 +1,56 @@
+Archivo de log: lexico-nhn2004-20261116-19h02.txt
+Estudiante: nhn2004
+Fecha de ejecución: 16-11-2026 19:02
+Archivo analizado: algoritmos\prueba_semantico2_nahin.rb
+
+*********** TOKENS VÁLIDOS *********** 
+[1] DEF: def
+[1] ID: area
+[1] PAREN_IZQ: (
+[1] ID: base
+[1] COMA: ,
+[1] ID: altura
+[1] PAREN_DER: )
+[2] RETURN: return
+[2] ID: base
+[2] MULTIPLICACION: *
+[2] ID: altura
+[3] END: end
+[4] DEF: def
+[4] ID: saludar
+[4] PAREN_IZQ: (
+[4] ID: nombre
+[4] COMA: ,
+[4] ID: saludo
+[4] IGUAL: =
+[4] CADENA: "Hola"
+[4] PAREN_DER: )
+[5] PUTS: puts
+[5] ID: saludo
+[5] COMA: ,
+[5] ID: nombre
+[6] END: end
+[7] ID: area
+[7] PAREN_IZQ: (
+[7] ENTERO: 4
+[7] PAREN_DER: )
+[8] ID: saludar
+[8] PAREN_IZQ: (
+[8] PAREN_DER: )
+[9] ID: saludar
+[9] PAREN_IZQ: (
+[9] CADENA: "Ana"
+[9] COMA: ,
+[9] CADENA: "Hi"
+[9] COMA: ,
+[9] ENTERO: 3
+[9] PAREN_DER: )
+[10] ID: dividir
+[10] PAREN_IZQ: (
+[10] ENTERO: 8
+[10] COMA: ,
+[10] ENTERO: 2
+[10] PAREN_DER: )
+
+*********** ERRORES ***********
+No se encontraron errores léxicos.

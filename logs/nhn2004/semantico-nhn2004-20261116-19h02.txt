@@ -1,0 +1,10 @@
+Archivo de log: semantico-nhn2004-20261116-19h02.txt
+Estudiante: nhn2004
+Fecha de ejecución: 16-11-2026 19:02
+Archivo analizado: algoritmos\prueba_semantico2_nahin.rb
+
+*********** ERRORES SEMÁNTICOS ***********
+Error semántico [Identificadores, línea 7]: 'area' espera 2 argumentos y recibió 1.
+Error semántico [Identificadores, línea 8]: 'saludar' espera entre 1 y 2 argumentos y recibió 0.
+Error semántico [Identificadores, línea 9]: 'saludar' espera entre 1 y 2 argumentos y recibió 3.
+Error semántico [Identificadores, línea 10]: la función 'dividir' no ha sido definida.
