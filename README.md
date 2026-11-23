@@ -35,6 +35,7 @@ Las reglas semánticas se verifican mientras el parser reconoce cada regla grama
 * `algoritmos/`: algoritmos de prueba en Ruby de cada integrante. Los de `pruebaN` corresponden al avance léxico, los de `prueba_sintacticoN` (y `prueba4_juan.rb`) al sintáctico y los de `prueba_semanticoN` al semántico.
 * `logs/`: logs de las pruebas, en una carpeta por usuario.
 * `propuesta.pdf`: propuesta del proyecto, con las reglas de cada integrante y el diseño de la interfaz.
+* `informe.pdf`: informe final, con los resultados de las pruebas, las conclusiones y las recomendaciones de cada integrante.
 
 ## Cómo usarlo
 Desde la carpeta del proyecto ejecute:
